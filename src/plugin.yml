@@ -1,5 +1,5 @@
-name: ServerFundamentals
-version: 1.0.0 Alpha
+name: FundamentalsX
+version: 1.0.1
 author: WiseHollow
 main: com.WiseHollow.Fundamentals.Main
 
@@ -101,8 +101,11 @@ commands:
                description: Calculate the current TPS of your server.
                usage: /<command>
       Give:
-               description: Calculate the current TPS of your server.
+               description: Spawn an item for a player.
                usage: /<command> <Player> <Material> <Amount>
+      I:
+               description: Spawn an item for yourself.
+               usage: /<command> <Material> <Amount>
       Kick:
                description: Kick a player from the server.
                usage: /<command> <Player> <Reason>
@@ -223,6 +226,7 @@ permissions:
                      Fundamentals.Weather: true
                      Fundamentals.InvSee: true
                      Fundamentals.Nametag: true
+                     Fundamentals.Mute: true
       Fundamentals.Poweruser.*:
                description: Gives access to all Admin commands.
                default: op
@@ -299,6 +303,11 @@ permissions:
                description: Change a players GameMode.
                default: op
       Fundamentals.Give:
+               description: Spawn an item for a player.
+               default: op
+               children:
+                     Fundamentals.I: true
+      Fundamentals.I:
                description: Spawn an item for a player.
                default: op
       Fundamentals.God:
@@ -404,4 +413,7 @@ permissions:
                default: op
       Fundamentals.Stop:
                description: Ability to shutdown the server.
+               default: op
+      Fundamentals.Mute:
+               description: Prevent a player from speaking publicly.
                default: op

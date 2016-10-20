@@ -1,6 +1,7 @@
 package com.WiseHollow.Fundamentals.Commands;
 
 import com.WiseHollow.Fundamentals.Language;
+import com.WiseHollow.Fundamentals.MaterialIndex;
 import com.WiseHollow.Fundamentals.Permissions.PermissionCheck;
 import com.WiseHollow.Fundamentals.PlayerUtil;
 import org.bukkit.Material;
@@ -29,7 +30,7 @@ public class CommandGive implements CommandExecutor
             Player target = PlayerUtil.GetPlayer(args[0]);
             if (target == null || !target.isOnline())
             {
-                sender.sendMessage(Language.YouMustBeLoggedIn);
+                sender.sendMessage(Language.PlayerMustBeLoggedIn);
                 return true;
             }
 
@@ -38,7 +39,7 @@ public class CommandGive implements CommandExecutor
             Material given;
             try
             {
-                given = Material.valueOf(materialData[0]);
+                given = MaterialIndex.getMaterial(materialData[0]);
             }
             catch(Exception ex)
             {
