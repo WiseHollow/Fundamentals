@@ -25,6 +25,7 @@ public class Settings
     public static String JoinMessage = "%p has joined the game.";
     public static String QuitMessage = "%p has left the game.";
     public static boolean AllowUnsafeEnchantments = false;
+    public static String StarterKit = "None";
 
     public static void Load()
     {
@@ -34,6 +35,7 @@ public class Settings
         JoinMessage = ChatColor.translateAlternateColorCodes('&', config.getString("Join_Message"));
         QuitMessage = ChatColor.translateAlternateColorCodes('&', config.getString("Quit_Message"));
         AllowUnsafeEnchantments = config.getBoolean("Allow_Unsafe_Enchantments");
+        StarterKit = config.getString("Starter_Kit");
 
         if (config.getConfigurationSection("Spawn_Location") != null)
         {

@@ -1,5 +1,6 @@
 package com.WiseHollow.Fundamentals.Listeners;
 
+import com.WiseHollow.Fundamentals.Kit;
 import com.WiseHollow.Fundamentals.Main;
 import com.WiseHollow.Fundamentals.PlayerUtil;
 import com.WiseHollow.Fundamentals.Settings;
@@ -32,6 +33,17 @@ public class PlayerEvents implements Listener
             AFKDetectTask task = new AFKDetectTask(p);
             task.Run();
         }
+    }
+
+    @EventHandler
+    public void StarterKit(PlayerJoinEvent event)
+    {
+        if (event.getPlayer().hasPlayedBefore() || Settings.StarterKit.equalsIgnoreCase("None"))
+            return;
+
+        Kit kit = Kit.GetKit(Settings.StarterKit);
+        if (kit != null)
+            kit.give(event.getPlayer());
     }
 
     @EventHandler
