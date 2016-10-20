@@ -8,6 +8,8 @@ Join_Message: '&e&l%p has joined the game!'
 Quit_Message: '&e&l%p has quit the game!'
 Allow_Unsafe_Enchantments: false
 Starter_Kit: 'None'
+Scheduled_Shutdown_Message: 'Server will restart in %m minutes'
+Allow_Metrics: true
 
 #
 # Kits

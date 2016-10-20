@@ -10,6 +10,7 @@ import net.milkbowl.vault.economy.Economy;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.IOException;
 import java.util.logging.Logger;
 
 public class Main extends JavaPlugin
@@ -30,6 +31,8 @@ public class Main extends JavaPlugin
 
         saveDefaultConfig();
         Settings.Load();
+
+        setupMetrics();
 
         registerCommands();
         getServer().getPluginManager().registerEvents(new PlayerEvents(), this);
@@ -109,6 +112,21 @@ public class Main extends JavaPlugin
         this.getCommand("Kit").setExecutor(new CommandKit());
         this.getCommand("Enchant").setExecutor(new CommandEnchant());
         this.getCommand("Nametag").setExecutor(new CommandNametag());
+        this.getCommand("Stop").setExecutor(new CommandStop());
+    }
+    public boolean setupMetrics()
+    {
+        if (!Settings.AllowMetrics)
+            return false;
+        try
+        {
+            MetricsLite metrics = new MetricsLite(this);
+            metrics.start();
+            return true;
+        } catch (IOException e)
+        {
+            return false;
+        }
     }
     private boolean setupEconomy()
     {

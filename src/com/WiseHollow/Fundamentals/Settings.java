@@ -26,6 +26,8 @@ public class Settings
     public static String QuitMessage = "%p has left the game.";
     public static boolean AllowUnsafeEnchantments = false;
     public static String StarterKit = "None";
+    public static String ShutdownMessage = "Server will restart in %m minutes";
+    public static Boolean AllowMetrics = true;
 
     public static void Load()
     {
@@ -36,6 +38,8 @@ public class Settings
         QuitMessage = ChatColor.translateAlternateColorCodes('&', config.getString("Quit_Message"));
         AllowUnsafeEnchantments = config.getBoolean("Allow_Unsafe_Enchantments");
         StarterKit = config.getString("Starter_Kit");
+        ShutdownMessage = config.getString("Scheduled_Shutdown_Message");
+        AllowMetrics = config.getBoolean("Allow_Metrics");
 
         if (config.getConfigurationSection("Spawn_Location") != null)
         {

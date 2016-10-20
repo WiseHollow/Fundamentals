@@ -172,6 +172,9 @@ commands:
       Nametag:
                description: Receive a nametag of given name.
                usage: /<command> <Name_Of_Tag>
+      Stop:
+               description: Stop the server now, or within specified minutes.
+               usage: /<command> <Minutes>
 permissions:
       Fundamentals.Admin.*:
                description: Gives access to all Admin commands.
@@ -398,4 +401,7 @@ permissions:
                default: op
       Fundamentals.Nametag:
                description: Receive a nametag of given name.
+               default: op
+      Fundamentals.Stop:
+               description: Ability to shutdown the server.
                default: op
