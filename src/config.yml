@@ -1,0 +1,16 @@
+#Seconds before teleport
+Teleport_Delay: 3
+#Minutes until considered away from keyboard.
+Afk_Delay: 3
+#If enabled, color codes starting with '&' will convert automatically.
+Sign_Colors: true
+Join_Message: '&e&l%p has joined the game!'
+Quit_Message: '&e&l%p has quit the game!'
+Kits:
+    StarterKit:
+        delay:
+        items:
+            - STONE_PICKAXE 1 0 Starter_Pickaxe &eThis_item&f_is_received%nfrom_your_starter_kit.
+            - STONE_SPADE 1 0 Start_Spade &eThis_item&f_is_received%nfrom_your_starter_kit.
+            - STONE_AXE 1 0 Starter_Axe &eThis_item&f_is_received%nfrom_your_starter_kit.
+            - STONE_SWORD 1 0 Starter_Sword &eThis_item&f_is_received%nfrom_your_starter_kit.
