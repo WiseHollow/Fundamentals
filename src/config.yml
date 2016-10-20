@@ -6,6 +6,7 @@ Afk_Delay: 3
 Sign_Colors: true
 Join_Message: '&e&l%p has joined the game!'
 Quit_Message: '&e&l%p has quit the game!'
+Allow_Unsafe_Enchantments: false
 Kits:
     StarterKit:
         delay:
@@ -13,4 +14,4 @@ Kits:
             - STONE_PICKAXE 1 0 Starter_Pickaxe &eThis_item&f_is_received%nfrom_your_starter_kit.
             - STONE_SPADE 1 0 Start_Spade &eThis_item&f_is_received%nfrom_your_starter_kit.
             - STONE_AXE 1 0 Starter_Axe &eThis_item&f_is_received%nfrom_your_starter_kit.
-            - STONE_SWORD 1 0 Starter_Sword &eThis_item&f_is_received%nfrom_your_starter_kit.
+            - STONE_SWORD 1 0 Starter_Sword &eThis_item&f_is_received%nfrom_your_starter_kit. DAMAGE_ALL%1

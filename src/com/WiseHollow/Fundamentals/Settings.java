@@ -24,6 +24,7 @@ public class Settings
     public static HashMap<String, Location> jails = new HashMap<>();
     public static String JoinMessage = "%p has joined the game.";
     public static String QuitMessage = "%p has left the game.";
+    public static boolean AllowUnsafeEnchantments = false;
 
     public static void Load()
     {
@@ -32,6 +33,7 @@ public class Settings
         SignColor = config.getBoolean("Sign_Colors");
         JoinMessage = ChatColor.translateAlternateColorCodes('&', config.getString("Join_Message"));
         QuitMessage = ChatColor.translateAlternateColorCodes('&', config.getString("Quit_Message"));
+        AllowUnsafeEnchantments = config.getBoolean("Allow_Unsafe_Enchantments");
 
         if (config.getConfigurationSection("Spawn_Location") != null)
         {
@@ -118,9 +120,9 @@ public class Settings
 
                         ItemStack item = new ItemStack(mat, amount, data);
                         ItemMeta meta = item.getItemMeta();
-                        if (displayName != null && !displayName.equalsIgnoreCase("."))
+                        if (displayName != null && !displayName.equalsIgnoreCase("-"))
                             meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', displayName.replaceAll("_", " ")));
-                        if (lore != null && !lore.equalsIgnoreCase("."))
+                        if (lore != null && !lore.equalsIgnoreCase("-"))
                         {
                             List<String> loreList = new ArrayList<>();
                             for(String l : ChatColor.translateAlternateColorCodes('&', lore.replaceAll("_", " ")).split("%n"))
@@ -136,8 +138,10 @@ public class Settings
                         {
                             for(Enchantment enchantment : enchantments.keySet())
                             {
-                                //TODO: Allow unsafe enchantments
-                                item.addEnchantment(enchantment, enchantments.get(enchantment));
+                                if (!AllowUnsafeEnchantments)
+                                    item.addEnchantment(enchantment, enchantments.get(enchantment));
+                                else
+                                    item.addUnsafeEnchantment(enchantment, enchantments.get(enchantment));
                             }
                         }
 
