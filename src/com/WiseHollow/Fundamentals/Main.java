@@ -78,7 +78,9 @@ public class Main extends JavaPlugin
         this.getCommand("Who").setExecutor(cw);
         this.getCommand("List").setExecutor(cw);
         this.getCommand("AFK").setExecutor(new CommandAFK());
-        this.getCommand("SpawnEntity").setExecutor(new CommandSpawnEntity());
+        CommandSpawnEntity se = new CommandSpawnEntity();
+        this.getCommand("SpawnEntity").setExecutor(se);
+        this.getCommand("SpawnMob").setExecutor(se);
         this.getCommand("Butcher").setExecutor(new CommandButcher());
         CommandTPS tps = new CommandTPS();
         this.getCommand("TPS").setExecutor(tps);
@@ -105,6 +107,7 @@ public class Main extends JavaPlugin
         this.getCommand("Unban").setExecutor(new CommandUnban());
         this.getCommand("Burn").setExecutor(new CommandBurn());
         this.getCommand("Kit").setExecutor(new CommandKit());
+        this.getCommand("Enchant").setExecutor(new CommandEnchant());
     }
     private boolean setupEconomy()
     {

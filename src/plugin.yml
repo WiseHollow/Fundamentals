@@ -163,6 +163,9 @@ commands:
       Kit:
                description: Spawn a kit into your inventory.
                usage: /<command> <Kit>
+      Enchant:
+               description: Enchant the item in your main hand.
+               usage: /<command> <Enchantment> <Level>
 permissions:
       Fundamentals.Admin.*:
                description: Gives access to all Admin commands.
@@ -194,6 +197,7 @@ permissions:
                      Fundamentals.SetMaxHealth: true
                      Fundamentals.SetMaxHealth.Other: true
                      Fundamentals.Kits.*: true
+                     Fundamentals.Enchant: true
       Fundamentals.Moderator.*:
                description: Gives access to all Admin commands.
                default: op
@@ -381,4 +385,7 @@ permissions:
                default: op
       Fundamentals.Kits.*:
                description: Give access to all kits on the server.
+               default: op
+      Fundamentals.Enchant:
+               description: Give the item in your hand an enchantment.
                default: op
