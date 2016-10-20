@@ -114,6 +114,9 @@ public class Main extends JavaPlugin
         this.getCommand("Nametag").setExecutor(new CommandNametag());
         this.getCommand("Stop").setExecutor(new CommandStop());
         this.getCommand("I").setExecutor(new CommandI());
+        this.getCommand("Warp").setExecutor(new CommandWarp());
+        this.getCommand("SetWarp").setExecutor(new CommandSetWarp());
+        this.getCommand("DelWarp").setExecutor(new CommandDelWarp());
     }
     public boolean setupMetrics()
     {

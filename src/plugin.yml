@@ -178,6 +178,15 @@ commands:
       Stop:
                description: Stop the server now, or within specified minutes.
                usage: /<command> <Minutes>
+      Warp:
+               description: Warp to a saved location on the server.
+               usage: /<command> <Name>
+      SetWarp:
+               description: Set your location as a saved warp.
+               usage: /<command> <Name>
+      DelWarp:
+               description: Delete a warp location from the server.
+               usage: /<command> <Name>
 permissions:
       Fundamentals.Admin.*:
                description: Gives access to all Admin commands.
@@ -227,6 +236,10 @@ permissions:
                      Fundamentals.InvSee: true
                      Fundamentals.Nametag: true
                      Fundamentals.Mute: true
+                     Fundamentals.SetWarp: true
+                     Fundamentals.DelWarp: true
+                     Fundamentals.Warp: true
+                     Fundamentals.Warps.*: true
       Fundamentals.Poweruser.*:
                description: Gives access to all Admin commands.
                default: op
@@ -416,4 +429,16 @@ permissions:
                default: op
       Fundamentals.Mute:
                description: Prevent a player from speaking publicly.
+               default: op
+      Fundamentals.Warp:
+               description: Warp to a saved location on the server.
+               default: op
+      Fundamentals.Warps.*:
+               description: Have access to all warps on the server.
+               default: op
+      Fundamentals.SetWarp:
+               description: Set a warp location.
+               default: op
+      Fundamentals.DelWarp:
+               description: Delete a warp location.
                default: op

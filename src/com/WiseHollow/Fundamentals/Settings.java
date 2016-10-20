@@ -1,12 +1,16 @@
 package com.WiseHollow.Fundamentals;
 
+import it.unimi.dsi.fastutil.Hash;
 import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +32,9 @@ public class Settings
     public static String StarterKit = "None";
     public static String ShutdownMessage = "Server will restart in %m minutes";
     public static Boolean AllowMetrics = true;
+
+    public static HashMap<String, Location> warps = new HashMap<>();
+
 
     public static void Load()
     {
@@ -158,9 +165,41 @@ public class Settings
                 Kit.AddKit(kit);
             }
         }
+
+        File warpFile = new File("plugins" + File.separator + "Fundamentals" + File.separator + "warps.yml");
+        if (warpFile.exists())
+        {
+            YamlConfiguration warpConfig = YamlConfiguration.loadConfiguration(warpFile);
+            if (warpConfig.getConfigurationSection("Warps") != null)
+            {
+                ConfigurationSection section = warpConfig.getConfigurationSection("Warps");
+                for(String key : section.getKeys(false))
+                {
+                    int x;
+                    int y;
+                    int z;
+                    float pitch;
+                    float yaw;
+
+                    x = section.getInt(key + ".Location.X");
+                    y = section.getInt(key + ".Location.Y");
+                    z = section.getInt(key + ".Location.Z");
+                    pitch = (float) section.getDouble(key + ".Location.Pitch");
+                    yaw = (float) section.getDouble(key + ".Location.Yaw");
+
+                    Location loc = new Location(Bukkit.getWorld(section.getString(key + ".Location.World")), x, y, z, yaw, pitch);
+
+                    warps.put(key, loc);
+                }
+            }
+        }
     }
     public static void Save()
     {
+        //
+        // General configuration
+        //
+
         config.set("Teleport_Delay", TeleportDelay);
         config.set("Afk_Delay", AFKDelay);
         config.set("Spawn_Location.World", Spawn.getWorld().getName());
@@ -170,6 +209,10 @@ public class Settings
         config.set("Spawn_Location.Yaw", Spawn.getYaw());
         config.set("Spawn_Location.Pitch", Spawn.getPitch());
 
+        //
+        // Jail saves
+        //
+
         config.set("Jails", null);
         for(String key : jails.keySet())
         {
@@ -178,6 +221,47 @@ public class Settings
             config.set("Jails." + key + ".Location.X", loc.getBlockX());
             config.set("Jails." + key + ".Location.Y", loc.getBlockY());
             config.set("Jails." + key + ".Location.Z", loc.getBlockZ());
+        }
+
+        //
+        // Warp saves
+        //
+
+        File warpFile = new File("plugins" + File.separator + "Fundamentals" + File.separator + "warps.yml");
+        if (!warpFile.exists())
+        {
+            try
+            {
+                warpFile.createNewFile();
+            }
+            catch(IOException ex)
+            {
+                Main.logger.severe(ex.getMessage());
+            }
+        }
+        YamlConfiguration warpConfig = YamlConfiguration.loadConfiguration(warpFile);
+        for(String key : warps.keySet())
+        {
+            Location loc = warps.get(key);
+            warpConfig.set("Warps." + key + ".Location.World", loc.getWorld().getName());
+            warpConfig.set("Warps." + key + ".Location.X", loc.getBlockX());
+            warpConfig.set("Warps." + key + ".Location.Y", loc.getBlockY());
+            warpConfig.set("Warps." + key + ".Location.Z", loc.getBlockZ());
+            warpConfig.set("Warps." + key + ".Location.Yaw", loc.getYaw());
+            warpConfig.set("Warps." + key + ".Location.Pitch", loc.getPitch());
+        }
+
+        //
+        // Save to file
+        //
+
+        try
+        {
+            warpConfig.save(warpFile);
+        }
+        catch(Exception ex)
+        {
+            Main.logger.severe(ex.getMessage());
         }
 
         Main.plugin.saveConfig();
