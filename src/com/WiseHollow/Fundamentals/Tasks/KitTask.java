@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
+import java.time.Clock;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,12 +30,18 @@ public class KitTask implements CustomTask, Listener
     private Player player;
     private Kit kit;
     private int taskID;
+    private long timeRun;
 
     public KitTask(Player player, Kit kit)
     {
         this.player = player;
         this.kit = kit;
         this.taskID = -1;
+    }
+
+    public int getSecondsLeft()
+    {
+        return (int) (Clock.systemDefaultZone().millis() - timeRun) / 1000;
     }
 
     @Override
@@ -44,6 +51,7 @@ public class KitTask implements CustomTask, Listener
             return false;
 
         kit.give(player);
+        timeRun = Clock.systemDefaultZone().millis();
 
         if (kit.getDelay() > 0)
         {

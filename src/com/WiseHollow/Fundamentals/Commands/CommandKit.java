@@ -58,7 +58,10 @@ public class CommandKit implements CommandExecutor
         }
         else
         {
-            player.sendMessage(Language.PREFIX_WARNING + "There is a cool-down in effect until the next use of this kit.");
+            if (task.getSecondsLeft() > 60)
+                player.sendMessage(Language.PREFIX_WARNING + "Try using the kit again in another " + task.getSecondsLeft() / 60 + " minutes.");
+            else
+                player.sendMessage(Language.PREFIX_WARNING + "Try using the kit again in another " + task.getSecondsLeft() + " seconds.");
             return true;
         }
 
