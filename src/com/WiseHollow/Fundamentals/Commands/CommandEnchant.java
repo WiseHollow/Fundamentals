@@ -50,7 +50,13 @@ public class CommandEnchant implements CommandExecutor
         }
         catch(Exception ex)
         {
-            player.sendMessage(ex.getMessage());
+            player.sendMessage(Language.PREFIX_WARNING + ex.getMessage());
+            return true;
+        }
+
+        if (enchantment == null)
+        {
+            player.sendMessage(Language.PREFIX_WARNING + "Invalid enchantment type!");
             return true;
         }
 

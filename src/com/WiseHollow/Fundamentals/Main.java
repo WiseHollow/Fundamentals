@@ -108,6 +108,7 @@ public class Main extends JavaPlugin
         this.getCommand("Burn").setExecutor(new CommandBurn());
         this.getCommand("Kit").setExecutor(new CommandKit());
         this.getCommand("Enchant").setExecutor(new CommandEnchant());
+        this.getCommand("Nametag").setExecutor(new CommandNametag());
     }
     private boolean setupEconomy()
     {

@@ -88,6 +88,9 @@ commands:
       SpawnEntity:
                description: Spawn a living entity at your target location.
                usage: /<command> <Entity>
+      SpawnMob:
+               description: Spawn a living entity at your target location.
+               usage: /<command> <Entity>
       Butcher:
                description: Kill all hostile creatures in your world.
                usage: /<command>
@@ -166,6 +169,9 @@ commands:
       Enchant:
                description: Enchant the item in your main hand.
                usage: /<command> <Enchantment> <Level>
+      Nametag:
+               description: Receive a nametag of given name.
+               usage: /<command> <Name_Of_Tag>
 permissions:
       Fundamentals.Admin.*:
                description: Gives access to all Admin commands.
@@ -213,6 +219,7 @@ permissions:
                      Fundamentals.Time: true
                      Fundamentals.Weather: true
                      Fundamentals.InvSee: true
+                     Fundamentals.Nametag: true
       Fundamentals.Poweruser.*:
                description: Gives access to all Admin commands.
                default: op
@@ -388,4 +395,7 @@ permissions:
                default: op
       Fundamentals.Enchant:
                description: Give the item in your hand an enchantment.
+               default: op
+      Fundamentals.Nametag:
+               description: Receive a nametag of given name.
                default: op
