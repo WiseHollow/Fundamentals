@@ -196,6 +196,9 @@ commands:
       DelHome:
                description: Delete a home location from the server.
                usage: /<command> <Name>
+      Workbench:
+               description: Pull up a virtual workbench.
+               usage: /<command>
 permissions:
       Fundamentals.Admin:
                description: Gives access to all Admin commands.
@@ -228,6 +231,7 @@ permissions:
                      Fundamentals.SetMaxHealth.Other: true
                      Fundamentals.Kits.*: true
                      Fundamentals.Enchant: true
+                     Fundamentals.Workbench: true
       Fundamentals.Moderator:
                description: Gives access to all Admin commands.
                default: op
@@ -465,4 +469,7 @@ permissions:
                default: op
       Fundamentals.DelHome:
                description: Delete a sethome of choice.
+               default: op
+      Fundamentals.Workbench:
+               description: Pull up a virtual workbench.
                default: op
