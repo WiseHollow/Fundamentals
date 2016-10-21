@@ -34,6 +34,13 @@ public class CommandSetHome implements CommandExecutor
 
         PlayerData pd = PlayerData.GetPlayerData(player);
 
+        int amount = pd.getHomes().size();
+        if (!Settings.HasPermissionForHomeAmount(player, amount + 1))
+        {
+            player.sendMessage(Language.PREFIX_WARNING + "You do not have permission for more homes.");
+            return true;
+        }
+
         String name = args[0];
         pd.setHome(name);
 

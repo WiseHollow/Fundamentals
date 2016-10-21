@@ -6,6 +6,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -32,6 +33,22 @@ public class Settings
     public static String StarterKit = "None";
     public static String ShutdownMessage = "Server will restart in %m minutes";
     public static Boolean AllowMetrics = true;
+    public static int DefaultSetHomeAmount = 1;
+
+    private static HashMap<String, Integer> SetHomeCountPermissions = new HashMap<>();
+    public static boolean HasPermissionForHomeAmount(Player player, int request)
+    {
+        if (player.hasPermission("Fundamentals.Homes.*") || request <= DefaultSetHomeAmount)
+            return true;
+
+        for(String key : SetHomeCountPermissions.keySet())
+        {
+            if (player.hasPermission("Fundamentals.Homes." + key) && SetHomeCountPermissions.get(key) >= request)
+                return true;
+        }
+
+        return false;
+    }
 
     public static HashMap<String, Location> warps = new HashMap<>();
 
@@ -47,6 +64,13 @@ public class Settings
         StarterKit = config.getString("Starter_Kit");
         ShutdownMessage = config.getString("Scheduled_Shutdown_Message");
         AllowMetrics = config.getBoolean("Allow_Metrics");
+        DefaultSetHomeAmount = config.getInt("Default_SetHomes");
+
+        for (String s : config.getStringList("Home_Permissions"))
+        {
+            String[] keys = s.split(" ");
+            SetHomeCountPermissions.put(keys[0], Integer.parseInt(keys[1]));
+        }
 
         if (config.getConfigurationSection("Spawn_Location") != null)
         {

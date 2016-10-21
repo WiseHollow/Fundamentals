@@ -1,5 +1,5 @@
 name: FundamentalsX
-version: 1.0.1
+version: 1.0.2
 author: WiseHollow
 main: com.WiseHollow.Fundamentals.Main
 
@@ -197,7 +197,7 @@ commands:
                description: Delete a home location from the server.
                usage: /<command> <Name>
 permissions:
-      Fundamentals.Admin.*:
+      Fundamentals.Admin:
                description: Gives access to all Admin commands.
                default: op
                children:
@@ -228,7 +228,7 @@ permissions:
                      Fundamentals.SetMaxHealth.Other: true
                      Fundamentals.Kits.*: true
                      Fundamentals.Enchant: true
-      Fundamentals.Moderator.*:
+      Fundamentals.Moderator:
                description: Gives access to all Admin commands.
                default: op
                children:
@@ -249,13 +249,13 @@ permissions:
                      Fundamentals.DelWarp: true
                      Fundamentals.Warp: true
                      Fundamentals.Warps.*: true
-      Fundamentals.Poweruser.*:
+      Fundamentals.Poweruser:
                description: Gives access to all Admin commands.
                default: op
                children:
                      Fundamentals.Player.*: true
                      Fundamentals.Back.OnDeath: true
-      Fundamentals.Player.*:
+      Fundamentals.Player:
                description: Gives access to all Admin commands.
                default: op
                children:
@@ -456,6 +456,9 @@ permissions:
                default: op
       Fundamentals.Home:
                description: Teleport to one of your sethomes.
+               default: op
+      Fundamentals.Homes.*:
+               description: Permission for unlimited homes.
                default: op
       Fundamentals.SetHome:
                description: Mark the current location as a sethome.

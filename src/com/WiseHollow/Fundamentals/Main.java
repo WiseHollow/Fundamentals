@@ -6,12 +6,17 @@ import com.WiseHollow.Fundamentals.Listeners.PlayerEvents;
 import com.WiseHollow.Fundamentals.Listeners.SignColorEvents;
 import com.WiseHollow.Fundamentals.Tasks.JailTask;
 import com.WiseHollow.Fundamentals.Tasks.LagTask;
+import com.google.common.io.ByteStreams;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.IOException;
+import java.io.*;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Main extends JavaPlugin
@@ -30,7 +35,9 @@ public class Main extends JavaPlugin
         logger.info("Registering Economy: " + setupEconomy());
         logger.info("Registering Chat: " + setupChat());
 
+
         saveDefaultConfig();
+
         Settings.Load();
 
         setupMetrics();
@@ -50,6 +57,11 @@ public class Main extends JavaPlugin
     {
         JailTask.DisableAll();
         logger.info(plugin.getName() + " is now disabled!");
+    }
+    @Override
+    public void saveDefaultConfig()
+    {
+        loadConfigFromJar();
     }
     private void registerCommands()
     {
@@ -154,5 +166,45 @@ public class Main extends JavaPlugin
         RegisteredServiceProvider<Chat> rsp = getServer().getServicesManager().getRegistration(Chat.class);
         chat = rsp.getProvider();
         return chat != null;
+    }
+    private void loadConfigFromJar()
+    {
+        File configFile = new File("plugins" + File.separator + "Fundamentals" + File.separator + "config.yml");
+
+        if (!configFile.exists())
+        {
+            InputStream fis = plugin.getResource("config.yml");
+            FileOutputStream fos = null;
+            try
+            {
+                configFile.createNewFile();
+                fos = new FileOutputStream(configFile);
+                byte[] buf = new byte[1024];
+                int i;
+                while ((i = fis.read(buf)) != -1)
+                {
+                    fos.write(buf, 0, i);
+                }
+            } catch (Exception e)
+            {
+                logger.severe("Failed to load config from JAR");
+            } finally
+            {
+                try
+                {
+                    if (fis != null)
+                    {
+                        fis.close();
+                    }
+                    if (fos != null)
+                    {
+                        fos.close();
+                    }
+                } catch (Exception e)
+                {
+                    logger.severe(e.getMessage());
+                }
+            }
+        }
     }
 }

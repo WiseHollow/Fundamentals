@@ -29,3 +29,17 @@ Kits:
             - STONE_SPADE 1 0 Start_Spade &eThis_item&f_is_received%nfrom_your_starter_kit.
             - STONE_AXE 1 0 Starter_Axe &eThis_item&f_is_received%nfrom_your_starter_kit.
             - STONE_SWORD 1 0 Starter_Sword &eThis_item&f_is_received%nfrom_your_starter_kit. DAMAGE_ALL%1
+
+#
+# Fundamentals Home
+#
+
+#
+# Players are allowed to have the default amount of sethomes. If you wish for a player to be able to make more,
+# make sure they have the appropriate permission.
+# Example: Fundamentals.Homes.VIP by default gives the player 5 default sethomes.
+#
+
+Default_SetHomes: 1
+Home_Permissions:
+    - VIP 5
