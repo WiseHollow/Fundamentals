@@ -25,6 +25,7 @@ public class Settings
     public static int TeleportDelay = 0; // In seconds
     public static Location Spawn = Bukkit.getServer().getWorlds().get(0).getSpawnLocation();
     public static Location SpawnFirstJoin = null;
+    public static boolean EnableSpawnFirstJoin = true;
     public static int AFKDelay = 0;
     public static boolean SignColor = false;
     public static HashMap<String, Location> jails = new HashMap<>();
@@ -66,6 +67,7 @@ public class Settings
         ShutdownMessage = config.getString("Scheduled_Shutdown_Message");
         AllowMetrics = config.getBoolean("Allow_Metrics");
         DefaultSetHomeAmount = config.getInt("Default_SetHomes");
+        EnableSpawnFirstJoin = config.getBoolean("First_Join");
 
         for (String s : config.getStringList("Home_Permissions"))
         {

@@ -1,8 +1,8 @@
-#Seconds before teleport
+# Seconds before teleport
 Teleport_Delay: 3
-#Minutes until considered away from keyboard.
+# Minutes until considered away from keyboard.
 Afk_Delay: 3
-#If enabled, color codes starting with '&' will convert automatically.
+# If enabled, color codes starting with '&' will convert automatically.
 Sign_Colors: true
 Join_Message: '&e&l%p has joined the game!'
 Quit_Message: '&e&l%p has quit the game!'
@@ -10,16 +10,18 @@ Allow_Unsafe_Enchantments: false
 Starter_Kit: 'None'
 Scheduled_Shutdown_Message: 'Server will restart in %m minutes'
 Allow_Metrics: true
+# If a location has been set for First Join (/setspawn fs) then make sure to have this set to true.
+First_Join: true
 
 #
 # Kits
 #
 
-#delay is measured in seconds
-#Spaces between words will be converted from "_"
-#In the lore, you may use "%n" to express a new line.
-#Colors are allowed as long as their code comes after a '&'
-#Enchantments and their level should be separeted by a '%'
+# delay is measured in seconds
+# Spaces between words will be converted from "_"
+# In the lore, you may use "%n" to express a new line.
+# Colors are allowed as long as their code comes after a '&'
+# Enchantments and their level should be separeted by a '%'
 
 Kits:
     StarterKit:

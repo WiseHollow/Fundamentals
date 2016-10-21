@@ -42,7 +42,7 @@ public class PlayerEvents implements Listener
     @EventHandler(priority = EventPriority.HIGH)
     public void FirstJoinSpawn(PlayerJoinEvent event)
     {
-        if (event.getPlayer().hasPlayedBefore() || Settings.SpawnFirstJoin == null)
+        if (event.getPlayer().hasPlayedBefore() || Settings.SpawnFirstJoin == null || !Settings.EnableSpawnFirstJoin)
             return;
 
         Bukkit.getScheduler().runTaskLater(Main.plugin, () ->
