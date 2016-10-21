@@ -133,6 +133,7 @@ public class Main extends JavaPlugin
         this.getCommand("Home").setExecutor(new CommandHome());
         this.getCommand("SetHome").setExecutor(new CommandSetHome());
         this.getCommand("DelHome").setExecutor(new CommandDelHome());
+        this.getCommand("Workbench").setExecutor(new CommandWorkbench());
     }
     public boolean setupMetrics()
     {
