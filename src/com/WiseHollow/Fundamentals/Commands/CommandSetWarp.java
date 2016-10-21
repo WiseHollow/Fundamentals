@@ -32,7 +32,7 @@ public class CommandSetWarp implements CommandExecutor
         if (args.length == 0)
             return false;
 
-        String name = args[0];
+        String name = args[0].toLowerCase();
         Settings.warps.put(name, player.getLocation());
 
         player.sendMessage(Language.PREFIX + "Warp has been set!");

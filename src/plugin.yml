@@ -187,6 +187,15 @@ commands:
       DelWarp:
                description: Delete a warp location from the server.
                usage: /<command> <Name>
+      Home:
+               description: Teleport to a saved home location on the server.
+               usage: /<command> <Name>
+      SetHome:
+               description: Set your location as a saved home.
+               usage: /<command> <Name>
+      DelHome:
+               description: Delete a home location from the server.
+               usage: /<command> <Name>
 permissions:
       Fundamentals.Admin.*:
                description: Gives access to all Admin commands.
@@ -260,6 +269,9 @@ permissions:
                      Fundamentals.TPDeny: true
                      Fundamentals.Who: true
                      Fundamentals.Kit: true
+                     Fundamentals.Home: true
+                     Fundamentals.SetHome: true
+                     Fundamentals.DelHome: true
       Fundamentals.AFK:
                description: Allows Player to be marked away from keyboard.
                default: op
@@ -441,4 +453,13 @@ permissions:
                default: op
       Fundamentals.DelWarp:
                description: Delete a warp location.
+               default: op
+      Fundamentals.Home:
+               description: Teleport to one of your sethomes.
+               default: op
+      Fundamentals.SetHome:
+               description: Mark the current location as a sethome.
+               default: op
+      Fundamentals.DelHome:
+               description: Delete a sethome of choice.
                default: op

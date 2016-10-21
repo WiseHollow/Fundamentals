@@ -1,4 +1,4 @@
-package com.WiseHollow.Fundamentals;
+package com.WiseHollow.Fundamentals.DataCollection;
 
 /*
  * Copyright 2011-2013 Tyler Blair. All rights reserved.

@@ -3,6 +3,7 @@ package com.WiseHollow.Fundamentals.Commands;
 import com.WiseHollow.Fundamentals.Language;
 import com.WiseHollow.Fundamentals.Tasks.AFKTask;
 import com.WiseHollow.Fundamentals.Tasks.StopTask;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,11 +23,19 @@ public class CommandStop implements CommandExecutor
             return true;
         }
 
+        if (args.length == 0)
+        {
+            Bukkit.getServer().shutdown();
+            return true;
+        }
+
         int minutes = 0;
         if (args.length > 0)
         {
             if (args[0].equalsIgnoreCase("Cancel"))
             {
+                if (StopTask.stopTask == null)
+                    return true;
                 StopTask.stopTask.Disable();
                 return true;
             }

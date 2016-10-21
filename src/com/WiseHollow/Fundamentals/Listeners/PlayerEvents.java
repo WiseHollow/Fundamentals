@@ -1,5 +1,6 @@
 package com.WiseHollow.Fundamentals.Listeners;
 
+import com.WiseHollow.Fundamentals.DataCollection.PlayerData;
 import com.WiseHollow.Fundamentals.Kit;
 import com.WiseHollow.Fundamentals.Main;
 import com.WiseHollow.Fundamentals.PlayerUtil;
@@ -15,6 +16,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.server.PluginEnableEvent;
 
 import static com.WiseHollow.Fundamentals.Tasks.TeleportTask.PreviousLocation;
 
@@ -114,6 +116,27 @@ public class PlayerEvents implements Listener
                     return;
                 v.setPassenger(event.getPlayer());
             },5L);
+        }
+    }
+
+    @EventHandler
+    public void InitializePlayerDataOnJoin(PlayerJoinEvent event)
+    {
+        if(PlayerData.GetPlayerData(event.getPlayer()) == null)
+        {
+            PlayerData.LoadPlayerData(event.getPlayer());
+        }
+    }
+
+    @EventHandler
+    public void InitializePlayerDataOnEnable(PluginEnableEvent event)
+    {
+        if (event.getPlugin() != Main.plugin)
+            return;
+
+        for(Player p : Bukkit.getOnlinePlayers())
+        {
+            PlayerData.LoadPlayerData(p);
         }
     }
 }

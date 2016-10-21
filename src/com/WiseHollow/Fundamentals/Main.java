@@ -1,6 +1,7 @@
 package com.WiseHollow.Fundamentals;
 
 import com.WiseHollow.Fundamentals.Commands.*;
+import com.WiseHollow.Fundamentals.DataCollection.MetricsLite;
 import com.WiseHollow.Fundamentals.Listeners.PlayerEvents;
 import com.WiseHollow.Fundamentals.Listeners.SignColorEvents;
 import com.WiseHollow.Fundamentals.Tasks.JailTask;
@@ -117,6 +118,9 @@ public class Main extends JavaPlugin
         this.getCommand("Warp").setExecutor(new CommandWarp());
         this.getCommand("SetWarp").setExecutor(new CommandSetWarp());
         this.getCommand("DelWarp").setExecutor(new CommandDelWarp());
+        this.getCommand("Home").setExecutor(new CommandHome());
+        this.getCommand("SetHome").setExecutor(new CommandSetHome());
+        this.getCommand("DelHome").setExecutor(new CommandDelHome());
     }
     public boolean setupMetrics()
     {

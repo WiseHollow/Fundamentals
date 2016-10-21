@@ -1,5 +1,6 @@
 package com.WiseHollow.Fundamentals.Commands;
 
+import com.WiseHollow.Fundamentals.DataCollection.PlayerData;
 import com.WiseHollow.Fundamentals.Language;
 import com.WiseHollow.Fundamentals.Settings;
 import org.bukkit.command.Command;
@@ -10,7 +11,7 @@ import org.bukkit.entity.Player;
 /**
  * Created by John on 10/13/2016.
  */
-public class CommandDelWarp implements CommandExecutor
+public class CommandSetHome implements CommandExecutor
 {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String cmd, String[] args)
@@ -22,7 +23,7 @@ public class CommandDelWarp implements CommandExecutor
         }
 
         Player player = (Player) sender;
-        if (!sender.hasPermission("Fundamentals.SetWarp"))
+        if (!sender.hasPermission("Fundamentals.SetHome"))
         {
             player.sendMessage(Language.DoesNotHavePermission);
             return true;
@@ -31,18 +32,12 @@ public class CommandDelWarp implements CommandExecutor
         if (args.length == 0)
             return false;
 
-        String name = args[0].toLowerCase();
+        PlayerData pd = PlayerData.GetPlayerData(player);
 
-        if (!Settings.warps.containsKey(name))
-        {
-            player.sendMessage(Language.PREFIX_WARNING + "Warp does not exist!");
-            return true;
-        }
+        String name = args[0];
+        pd.setHome(name);
 
-        Settings.warps.remove(name);
-
-        player.sendMessage(Language.PREFIX + "Warp has been removed!");
-        Settings.Save();
+        player.sendMessage(Language.PREFIX + "Home has been set!");
         return true;
     }
 }
