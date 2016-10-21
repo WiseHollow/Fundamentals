@@ -24,6 +24,7 @@ public class Settings
     private static FileConfiguration config = Main.plugin.getConfig();
     public static int TeleportDelay = 0; // In seconds
     public static Location Spawn = Bukkit.getServer().getWorlds().get(0).getSpawnLocation();
+    public static Location SpawnFirstJoin = null;
     public static int AFKDelay = 0;
     public static boolean SignColor = false;
     public static HashMap<String, Location> jails = new HashMap<>();
@@ -77,6 +78,13 @@ public class Settings
             World world = Bukkit.getWorld(config.getString("Spawn_Location.World"));
             if (world != null)
                 Spawn = new Location(world, config.getInt("Spawn_Location.X"), config.getInt("Spawn_Location.Y"), config.getInt("Spawn_Location.Z"), (float) config.getDouble("Spawn_Location.Yaw"), (float) config.getDouble("Spawn_Location.Pitch"));
+        }
+
+        if (config.getConfigurationSection("Spawn_Location_First_Join") != null)
+        {
+            World world = Bukkit.getWorld(config.getString("Spawn_Location_First_Join.World"));
+            if (world != null)
+                SpawnFirstJoin = new Location(world, config.getInt("Spawn_Location_First_Join.X"), config.getInt("Spawn_Location_First_Join.Y"), config.getInt("Spawn_Location_First_Join.Z"), (float) config.getDouble("Spawn_Location_First_Join.Yaw"), (float) config.getDouble("Spawn_Location_First_Join.Pitch"));
         }
 
         if (config.getConfigurationSection("Jails") != null)

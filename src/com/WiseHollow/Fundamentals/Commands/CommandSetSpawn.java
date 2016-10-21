@@ -29,6 +29,14 @@ public class CommandSetSpawn implements CommandExecutor
             return true;
         }
 
+        if (args.length > 0 && (args[0].equalsIgnoreCase("FirstJoin") || args[0].equalsIgnoreCase("FS")))
+        {
+            Settings.SpawnFirstJoin = player.getLocation().clone();
+            Settings.Save();
+
+            player.sendMessage(Language.PREFIX + "First-join spawn location has been set!");
+        }
+
         Settings.Spawn = player.getLocation().clone();
         Settings.Save();
 

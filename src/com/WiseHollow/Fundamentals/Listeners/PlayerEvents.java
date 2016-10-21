@@ -6,11 +6,13 @@ import com.WiseHollow.Fundamentals.Main;
 import com.WiseHollow.Fundamentals.PlayerUtil;
 import com.WiseHollow.Fundamentals.Settings;
 import com.WiseHollow.Fundamentals.Tasks.AFKDetectTask;
+import org.apache.logging.log4j.core.net.Priority;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Vehicle;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -35,6 +37,18 @@ public class PlayerEvents implements Listener
             AFKDetectTask task = new AFKDetectTask(p);
             task.Run();
         }
+    }
+
+    @EventHandler(priority = EventPriority.HIGH)
+    public void FirstJoinSpawn(PlayerJoinEvent event)
+    {
+        if (event.getPlayer().hasPlayedBefore() || Settings.SpawnFirstJoin == null)
+            return;
+
+        Bukkit.getScheduler().runTaskLater(Main.plugin, () ->
+        {
+            event.getPlayer().teleport(Settings.SpawnFirstJoin);
+        }, 1L);
     }
 
     @EventHandler
