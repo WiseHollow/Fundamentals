@@ -199,6 +199,9 @@ commands:
       Workbench:
                description: Pull up a virtual workbench.
                usage: /<command>
+      Sudo:
+               description: Force a player to run a command. 
+               usage: /<command> <Player> <CMD>
 permissions:
       Fundamentals.Admin:
                description: Gives access to all Admin commands.
@@ -232,6 +235,7 @@ permissions:
                      Fundamentals.Kits.*: true
                      Fundamentals.Enchant: true
                      Fundamentals.Workbench: true
+                     Fundamentals.Sudo: true
       Fundamentals.Moderator:
                description: Gives access to all Admin commands.
                default: op
@@ -472,4 +476,7 @@ permissions:
                default: op
       Fundamentals.Workbench:
                description: Pull up a virtual workbench.
+               default: op
+      Fundamentals.Sudo:
+               description: Force another player to run a command.
                default: op
