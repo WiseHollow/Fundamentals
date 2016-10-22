@@ -7,6 +7,7 @@ import org.bukkit.entity.Vehicle;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityTeleportEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
@@ -51,6 +52,7 @@ public class AFKDetectTask implements CustomTask, Listener
     {
         PlayerMoveEvent.getHandlerList().unregister(this);
         PlayerQuitEvent.getHandlerList().unregister(this);
+        AsyncPlayerChatEvent.getHandlerList().unregister(this);
         taskList.remove(this);
         if (taskID != 1)
             Main.plugin.getServer().getScheduler().cancelTask(taskID);
@@ -64,16 +66,16 @@ public class AFKDetectTask implements CustomTask, Listener
         if (event.getFrom().getBlockX() == event.getTo().getBlockX() && event.getFrom().getBlockY() == event.getTo().getBlockY() && event.getFrom().getBlockZ() == event.getTo().getBlockZ())
             return;
 
-        if (taskID != 1)
-            Main.plugin.getServer().getScheduler().cancelTask(taskID);
-        taskID = Main.plugin.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, () ->
-        {
-            if (event.getPlayer() == null || !event.getPlayer().isOnline())
-                return;
+        Refresh();
+    }
 
-            AFKTask task = new AFKTask(event.getPlayer());
-            task.Run();
-        },20*60* Settings.AFKDelay);
+    @EventHandler
+    public void WaitForSpeaking(AsyncPlayerChatEvent event)
+    {
+        if (event.isCancelled() || !event.getPlayer().equals(player))
+            return;
+
+        Refresh();
     }
 
     @EventHandler
@@ -83,5 +85,19 @@ public class AFKDetectTask implements CustomTask, Listener
             return;
 
         Disable();
+    }
+
+    private void Refresh()
+    {
+        if (taskID != 1)
+            Main.plugin.getServer().getScheduler().cancelTask(taskID);
+        taskID = Main.plugin.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, () ->
+        {
+            if (player == null || !player.isOnline())
+                return;
+
+            AFKTask task = new AFKTask(player);
+            task.Run();
+        },20*60* Settings.AFKDelay);
     }
 }

@@ -35,14 +35,14 @@ public class CommandSudo implements CommandExecutor
             return true;
         }
 
-        String c = "/";
+        String c = "";
         for(int i = 1; i < args.length; i++)
         {
             c+=args[i]+" ";
         }
 
         target.performCommand(c);
-        sender.sendMessage(Language.PREFIX_COLOR + "You have run the command " + c + " for player " + target.getName() + " seconds");
+        sender.sendMessage(Language.PREFIX_COLOR + "You have run the command \'/" + c + "\' for player " + target.getName() + " seconds");
 
         return true;
     }

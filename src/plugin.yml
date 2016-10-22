@@ -1,5 +1,5 @@
 name: FundamentalsX
-version: 1.0.2
+version: 1.0.3
 author: WiseHollow
 main: com.WiseHollow.Fundamentals.Main
 
@@ -200,7 +200,7 @@ commands:
                description: Pull up a virtual workbench.
                usage: /<command>
       Sudo:
-               description: Force a player to run a command. 
+               description: Force a player to run a command.
                usage: /<command> <Player> <CMD>
 permissions:
       Fundamentals.Admin:

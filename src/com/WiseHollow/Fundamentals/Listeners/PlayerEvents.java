@@ -75,13 +75,13 @@ public class PlayerEvents implements Listener
     @EventHandler
     public void LoginMessage(PlayerJoinEvent event)
     {
-        event.setJoinMessage(Settings.JoinMessage.replace("%p", PlayerUtil.GetPlayerPrefix(event.getPlayer()) + event.getPlayer().getName()) + ChatColor.RESET);
+        event.setJoinMessage(Settings.JoinMessage.replace("%p", event.getPlayer().getName()));
     }
 
     @EventHandler
     public void QuitMessage(PlayerQuitEvent event)
     {
-        event.setQuitMessage(Settings.QuitMessage.replace("%p", PlayerUtil.GetPlayerPrefix(event.getPlayer()) + event.getPlayer().getName()) + ChatColor.RESET);
+        event.setQuitMessage(Settings.QuitMessage.replace("%p", event.getPlayer().getName()));
     }
 
     @EventHandler
