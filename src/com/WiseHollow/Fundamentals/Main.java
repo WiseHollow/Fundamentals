@@ -172,6 +172,9 @@ public class Main extends JavaPlugin
     public static void LoadConfigFromJar(String path, Plugin plugin)
     {
         File configFile = new File(path);
+        File dir = new File(configFile.getAbsolutePath().substring(0,configFile.getAbsolutePath().lastIndexOf(File.separator)));
+        if (!dir.isDirectory())
+            dir.mkdirs();
 
         if (!configFile.exists())
         {
@@ -212,6 +215,9 @@ public class Main extends JavaPlugin
     private void loadConfigFromJar()
     {
         File configFile = new File("plugins" + File.separator + "Fundamentals" + File.separator + "config.yml");
+        File dir = new File("plugins" + File.separator + "Fundamentals");
+        if (!dir.isDirectory())
+            dir.mkdirs();
 
         if (!configFile.exists())
         {
