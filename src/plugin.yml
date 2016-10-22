@@ -1,10 +1,10 @@
 name: FundamentalsX
-version: 1.0.3
+version: 1.0.5
 author: WiseHollow
 main: com.WiseHollow.Fundamentals.Main
 
 softdepend: [ Vault ]
-loadbefore: [ WorldEdit ]
+loadbefore: [ WorldEdit, FundamentalsXCounterGrief, FundamentalsXChat ]
 
 commands:
       SetSpawn:

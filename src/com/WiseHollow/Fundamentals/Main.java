@@ -169,6 +169,46 @@ public class Main extends JavaPlugin
         chat = rsp.getProvider();
         return chat != null;
     }
+    public static void LoadConfigFromJar(String path, Plugin plugin)
+    {
+        File configFile = new File(path);
+
+        if (!configFile.exists())
+        {
+            InputStream fis = plugin.getResource("config.yml");
+            FileOutputStream fos = null;
+            try
+            {
+                configFile.createNewFile();
+                fos = new FileOutputStream(configFile);
+                byte[] buf = new byte[1024];
+                int i;
+                while ((i = fis.read(buf)) != -1)
+                {
+                    fos.write(buf, 0, i);
+                }
+            } catch (Exception e)
+            {
+                plugin.getLogger().severe("Failed to load config from JAR");
+            } finally
+            {
+                try
+                {
+                    if (fis != null)
+                    {
+                        fis.close();
+                    }
+                    if (fos != null)
+                    {
+                        fos.close();
+                    }
+                } catch (Exception e)
+                {
+                    plugin.getLogger().severe(e.getMessage());
+                }
+            }
+        }
+    }
     private void loadConfigFromJar()
     {
         File configFile = new File("plugins" + File.separator + "Fundamentals" + File.separator + "config.yml");
