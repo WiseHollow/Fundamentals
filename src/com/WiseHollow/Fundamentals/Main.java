@@ -164,6 +164,13 @@ public class Main extends JavaPlugin
         economy = rsp.getProvider();
         return (economy != null);
     }
+    @Override
+    public FileConfiguration getConfig()
+    {
+        File file = new File("plugins" + File.separator + "Fundamentals" + File.separator + "config.yml");
+        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+        return config;
+    }
     private boolean setupChat() {
         RegisteredServiceProvider<Chat> rsp = getServer().getServicesManager().getRegistration(Chat.class);
         chat = rsp.getProvider();
