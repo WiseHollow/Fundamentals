@@ -35,16 +35,20 @@ public class CommandGive implements CommandExecutor
             }
 
             String[] materialData = args[1].toUpperCase().split(":");
-
-            Material given;
-            try
-            {
-                given = MaterialIndex.getMaterial(materialData[0]);
+            Material given = MaterialIndex.getMaterial(materialData[0]);
+            if (given == null) {
+                try {
+                    given = Material.getMaterial(Integer.parseInt(materialData[0]));
+                }
+                catch (NumberFormatException exception) {
+                    sender.sendMessage(Language.PREFIX_WARNING + "Invalid material given.");
+                    return true;
+                }
             }
-            catch(Exception ex)
-            {
+
+            if (given == null) {
                 sender.sendMessage(Language.PREFIX_WARNING + "Invalid material given.");
-                return false;
+                return true;
             }
             int amount = 64;
             if (args.length == 3)
