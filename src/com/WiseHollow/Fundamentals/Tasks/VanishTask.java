@@ -59,7 +59,7 @@ public class VanishTask implements CustomTask, Listener
 
         for(Player p : Bukkit.getOnlinePlayers())
         {
-            p.showPlayer(player);
+            p.showPlayer(Main.plugin, player);
         }
     }
 
@@ -71,9 +71,9 @@ public class VanishTask implements CustomTask, Listener
         for(Player p : Bukkit.getOnlinePlayers())
         {
             if (! PermissionCheck.HasModeratorPermissions(p))
-                p.hidePlayer(player);
+                p.hidePlayer(Main.plugin, player);
             else
-                p.showPlayer(player);
+                p.showPlayer(Main.plugin, player);
         }
     }
 
