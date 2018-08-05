@@ -8,15 +8,15 @@ import org.bukkit.block.Block;
  */
 public class BlockData
 {
-    private org.bukkit.block.data.BlockData data;
+    private byte data;
     private Material material;
 
     public BlockData(Block block)
     {
         material = block.getType();
-        data = block.getBlockData();
+        data = block.getData();
     }
 
-    public org.bukkit.block.data.BlockData getData() { return data; }
+    public byte getData() { return data; }
     public Material getMaterial() { return material; }
 }

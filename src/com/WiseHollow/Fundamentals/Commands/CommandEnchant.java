@@ -42,12 +42,12 @@ public class CommandEnchant implements CommandExecutor
 
         if (args.length == 0) {
             StringBuilder stringBuilder = new StringBuilder();
-            Arrays.asList(Enchantment.values()).forEach(enchantment -> stringBuilder.append(enchantment.getKey().getKey()).append(" "));
+            Arrays.asList(Enchantment.values()).forEach(enchantment -> stringBuilder.append(enchantment.getName()).append(" "));
             player.sendMessage(Language.PREFIX + stringBuilder.toString());
             return true;
         }
 
-        Enchantment enchantment = EnchantmentWrapper.getByKey(NamespacedKey.minecraft(args[0]));
+        Enchantment enchantment = EnchantmentWrapper.getByName(args[0]);
 
         int level = 1;
         if (args.length > 1) {
@@ -70,7 +70,7 @@ public class CommandEnchant implements CommandExecutor
         else
             player.getInventory().getItemInMainHand().addUnsafeEnchantment(enchantment, level);
 
-        player.sendMessage(Language.PREFIX + "Enchantment: " + enchantment.getKey().getKey() + " added at level " + level);
+        player.sendMessage(Language.PREFIX + "Enchantment: " + enchantment.getName() + " added at level " + level);
 
         return true;
     }

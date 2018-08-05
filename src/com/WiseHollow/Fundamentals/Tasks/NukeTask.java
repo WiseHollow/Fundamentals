@@ -90,7 +90,7 @@ public class NukeTask implements CustomTask, Listener
         {
             BlockData data = restoration.get(loc);
             loc.getBlock().setType(data.getMaterial());
-            loc.getBlock().setBlockData(data.getData());
+            loc.getBlock().setData(data.getData());
         }
         restoration.clear();
     }
