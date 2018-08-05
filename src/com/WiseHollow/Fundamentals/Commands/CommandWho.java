@@ -9,19 +9,28 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.Collection;
+import java.util.stream.Collectors;
+
 /**
  * Created by John on 10/13/2016.
  */
 public class CommandWho implements CommandExecutor
 {
+    private Collection<Player> getOnlinePlayers() {
+        return Bukkit.getOnlinePlayers().stream()
+                .filter(player -> (!player.hasMetadata("vanished") || player.getMetadata("vanished").equals(false)))
+                .collect(Collectors.toList());
+    }
+
     private String GetOnlinePlayers()
     {
-        String list = "";
-        for(Player p : Bukkit.getOnlinePlayers())
-        {
-            list+= PlayerUtil.GetPlayerPrefix(p) + p.getName() + " ";
-        }
-        return list;
+        StringBuilder list = new StringBuilder();
+
+        getOnlinePlayers()
+                .forEach(player -> list.append(PlayerUtil.GetPlayerPrefix(player)).append(player.getName()).append(" "));
+
+        return list.toString();
     }
 
     @Override
@@ -33,7 +42,9 @@ public class CommandWho implements CommandExecutor
             return true;
         }
 
-        sender.sendMessage(Language.PREFIX + "Online players (" + Bukkit.getOnlinePlayers().size() + "): " + GetOnlinePlayers());
+        String onlinePlayers = GetOnlinePlayers();
+
+        sender.sendMessage(Language.PREFIX + "Online players (" + getOnlinePlayers().size() + "): " + GetOnlinePlayers());
         return true;
     }
 }

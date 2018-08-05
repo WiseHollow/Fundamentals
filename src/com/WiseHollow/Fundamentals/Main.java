@@ -6,7 +6,6 @@ import com.WiseHollow.Fundamentals.Listeners.PlayerEvents;
 import com.WiseHollow.Fundamentals.Listeners.SignColorEvents;
 import com.WiseHollow.Fundamentals.Tasks.JailTask;
 import com.WiseHollow.Fundamentals.Tasks.LagTask;
-import com.google.common.io.ByteStreams;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -16,7 +15,6 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Main extends JavaPlugin
@@ -34,7 +32,6 @@ public class Main extends JavaPlugin
 
         logger.info("Registering Economy: " + setupEconomy());
         logger.info("Registering Chat: " + setupChat());
-
 
         saveDefaultConfig();
 
@@ -135,6 +132,7 @@ public class Main extends JavaPlugin
         this.getCommand("DelHome").setExecutor(new CommandDelHome());
         this.getCommand("Workbench").setExecutor(new CommandWorkbench());
         this.getCommand("Sudo").setExecutor(new CommandSudo());
+        this.getCommand("Fundamentals").setExecutor(new CommandFundamentals());
     }
     public boolean setupMetrics()
     {
@@ -171,10 +169,14 @@ public class Main extends JavaPlugin
         FileConfiguration config = YamlConfiguration.loadConfiguration(file);
         return config;
     }
-    private boolean setupChat() {
-        RegisteredServiceProvider<Chat> rsp = getServer().getServicesManager().getRegistration(Chat.class);
-        chat = rsp.getProvider();
-        return chat != null;
+    private boolean setupChat()
+    {
+        RegisteredServiceProvider<Chat> chatProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.chat.Chat.class);
+        if (chatProvider != null) {
+            chat = chatProvider.getProvider();
+        }
+
+        return (chat != null);
     }
     public static void LoadConfigFromJar(String path, Plugin plugin)
     {

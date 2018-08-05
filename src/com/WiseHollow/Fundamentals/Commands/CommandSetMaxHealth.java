@@ -3,6 +3,7 @@ package com.WiseHollow.Fundamentals.Commands;
 import com.WiseHollow.Fundamentals.Language;
 import com.WiseHollow.Fundamentals.Permissions.PermissionCheck;
 import com.WiseHollow.Fundamentals.PlayerUtil;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -59,7 +60,7 @@ public class CommandSetMaxHealth implements CommandExecutor
             sender.sendMessage(Language.PREFIX + "Your health has been set to: " + health);
         }
 
-        player.setMaxHealth(health);
+        player.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(health);
         player.setHealth(health);
 
         return true;

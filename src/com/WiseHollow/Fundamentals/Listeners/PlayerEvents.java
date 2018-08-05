@@ -2,13 +2,14 @@ package com.WiseHollow.Fundamentals.Listeners;
 
 import com.WiseHollow.Fundamentals.DataCollection.PlayerData;
 import com.WiseHollow.Fundamentals.Kit;
+import com.WiseHollow.Fundamentals.Language;
 import com.WiseHollow.Fundamentals.Main;
-import com.WiseHollow.Fundamentals.PlayerUtil;
 import com.WiseHollow.Fundamentals.Settings;
 import com.WiseHollow.Fundamentals.Tasks.AFKDetectTask;
-import org.apache.logging.log4j.core.net.Priority;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Vehicle;
 import org.bukkit.event.EventHandler;
@@ -19,6 +20,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.server.PluginEnableEvent;
+
+import java.util.stream.Collectors;
 
 import static com.WiseHollow.Fundamentals.Tasks.TeleportTask.PreviousLocation;
 
@@ -63,6 +66,28 @@ public class PlayerEvents implements Listener
     }
 
     @EventHandler
+    public void flyOnJoin(PlayerJoinEvent event) {
+        if (event.getPlayer().hasPermission("Fundamentals.Fly")) {
+            boolean ground = false;
+            for (int y = 1; y < 3; y++) {
+                Location location = event.getPlayer().getLocation().clone().subtract(0, y, 0);
+                if (location.getBlock().getType() != Material.AIR) {
+                    ground = true;
+                    break;
+                }
+            }
+            if (!ground) {
+                Bukkit.getScheduler().runTaskLater(Main.plugin, () ->
+                {
+                    event.getPlayer().setAllowFlight(true);
+                    event.getPlayer().setFlying(true);
+                    event.getPlayer().sendMessage(Language.PREFIX + "Flight enabled!");
+                }, 1L);
+            }
+        }
+    }
+
+    @EventHandler
     public void AFKTaskOnLogin(PlayerJoinEvent event)
     {
         if (AFKDetectTask.GetTask(event.getPlayer()) != null)
@@ -75,7 +100,16 @@ public class PlayerEvents implements Listener
     @EventHandler
     public void LoginMessage(PlayerJoinEvent event)
     {
+        Integer online = Bukkit.getOnlinePlayers().stream()
+                .filter(player -> (!player.hasMetadata("vanished") || player.getMetadata("vanished").equals(false)))
+                .collect(Collectors.toList()).size();
+
         event.setJoinMessage(Settings.JoinMessage.replace("%p", event.getPlayer().getName()));
+        event.getPlayer().sendMessage(ChatColor.GOLD + "Welcome, " + event.getPlayer().getName());
+        event.getPlayer().sendMessage(ChatColor.GOLD + "Type " + ChatColor.RED + "/help" + ChatColor.GOLD + " for a list of commands.");
+        if (event.getPlayer().hasPermission("Fundamentals.Who"))
+            event.getPlayer().sendMessage(ChatColor.GOLD + "Type " + ChatColor.RED + "/list" + ChatColor.GOLD + " to see who is online.");
+        event.getPlayer().sendMessage(ChatColor.GOLD + "Players online: " + ChatColor.RED + online);
     }
 
     @EventHandler
@@ -128,7 +162,7 @@ public class PlayerEvents implements Listener
             {
                 if (event.getPlayer() == null || !event.getPlayer().isOnline() || v == null)
                     return;
-                v.setPassenger(event.getPlayer());
+                v.addPassenger(event.getPlayer());
             },5L);
         }
     }

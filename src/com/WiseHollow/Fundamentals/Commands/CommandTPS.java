@@ -1,14 +1,10 @@
 package com.WiseHollow.Fundamentals.Commands;
 
 import com.WiseHollow.Fundamentals.Language;
-import com.WiseHollow.Fundamentals.Main;
-import com.WiseHollow.Fundamentals.Permissions.PermissionCheck;
-import com.WiseHollow.Fundamentals.Tasks.AFKTask;
 import com.WiseHollow.Fundamentals.Tasks.LagTask;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.milkbowl.vault.chat.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;

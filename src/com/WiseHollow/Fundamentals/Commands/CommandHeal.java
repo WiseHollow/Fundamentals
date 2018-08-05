@@ -3,6 +3,7 @@ package com.WiseHollow.Fundamentals.Commands;
 import com.WiseHollow.Fundamentals.Language;
 import com.WiseHollow.Fundamentals.Permissions.PermissionCheck;
 import com.WiseHollow.Fundamentals.PlayerUtil;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -47,7 +48,7 @@ public class CommandHeal implements CommandExecutor
             sender.sendMessage(Language.PREFIX + "You have been healed.");
         }
 
-        player.setHealth(player.getMaxHealth());
+        player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
         player.setFoodLevel(20);
         player.setFireTicks(0);
         for(PotionEffectType t : PotionEffectType.values())

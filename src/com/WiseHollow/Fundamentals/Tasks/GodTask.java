@@ -58,7 +58,7 @@ public class GodTask implements CustomTask, Listener
 
         for(Player p : Bukkit.getOnlinePlayers())
         {
-            p.showPlayer(player);
+            p.showPlayer(Main.plugin, player);
         }
     }
 

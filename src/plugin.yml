@@ -1,10 +1,10 @@
 name: FundamentalsX
-version: 1.0.5
+version: 1.2.0
 author: WiseHollow
 main: com.WiseHollow.Fundamentals.Main
 
 softdepend: [ Vault ]
-loadbefore: [ WorldEdit, FundamentalsXCounterGrief, FundamentalsXChat ]
+loadbefore: [ WorldEdit, FundamentalsXCounterGrief ]
 
 commands:
       SetSpawn:
@@ -202,6 +202,9 @@ commands:
       Sudo:
                description: Force a player to run a command.
                usage: /<command> <Player> <CMD>
+      Fundamentals:
+               description: Interface with the plugin.
+               usage: /<command> <reload>
 permissions:
       Fundamentals.Admin:
                description: Gives access to all Admin commands.

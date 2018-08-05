@@ -10,7 +10,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../Spigot Build Tools/Spigot/Spigot-API/target/spigot-api-1.10.2-R0.1-SNAPSHOT.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../Spigot Jar Files/spigot-api-1.13-R0.1-SNAPSHOT-shaded-b1756.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -19,21 +19,10 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://E:/Entertainment/Video Games/PC Games/Minecraft/Minecraft Servers/Spigot - Development Server/plugins/Vault.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../Spigot Jar Files/Vault.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../Spigot Build Tools/Spigot/Spigot-Server/target/spigot-1.10.2-R0.1-SNAPSHOT.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../Spigot Build Tools/Spigot/Spigot-Server/target/spigot-1.10.2-R0.1-SNAPSHOT.jar!/" />
-        </SOURCES>
       </library>
     </orderEntry>
   </component>

@@ -1,9 +1,9 @@
 package com.WiseHollow.Fundamentals.Commands;
 
 import com.WiseHollow.Fundamentals.Language;
-import com.WiseHollow.Fundamentals.Permissions.PermissionCheck;
 import com.WiseHollow.Fundamentals.PlayerUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -52,7 +52,7 @@ public class CommandKick implements CommandExecutor
         else
         {
             for(int i = 1; i < args.length; i++)
-                reason+=args[i]+" ";
+                reason+= ChatColor.translateAlternateColorCodes('&', args[i])+" ";
         }
 
         for (Player p : targets)

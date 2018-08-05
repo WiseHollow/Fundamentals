@@ -45,19 +45,23 @@ public class CommandGameMode implements CommandExecutor
 
         String gm = args[0];
         GameMode mode = null;
-        if (gm.equalsIgnoreCase("0") || gm.equalsIgnoreCase("Survival"))
+        if (gm.equalsIgnoreCase("0") || gm.equalsIgnoreCase("Survival") || gm.equalsIgnoreCase("s"))
             mode = GameMode.SURVIVAL;
-        if (gm.equalsIgnoreCase("1") || gm.equalsIgnoreCase("Creative"))
+        if (gm.equalsIgnoreCase("1") || gm.equalsIgnoreCase("Creative") || gm.equalsIgnoreCase("c"))
             mode = GameMode.CREATIVE;
-        if (gm.equalsIgnoreCase("2") || gm.equalsIgnoreCase("Adventure"))
+        if (gm.equalsIgnoreCase("2") || gm.equalsIgnoreCase("Adventure") || gm.equalsIgnoreCase("a"))
             mode = GameMode.ADVENTURE;
-        if (gm.equalsIgnoreCase("3") || gm.equalsIgnoreCase("Spectator"))
+        if (gm.equalsIgnoreCase("3") || gm.equalsIgnoreCase("Spectator") || gm.equalsIgnoreCase("sp"))
             mode = GameMode.SPECTATOR;
 
-        player.setGameMode(mode);
-        player.sendMessage(Language.PREFIX + "GameMode set to: " + mode.name());
-        if (args.length > 1)
-            sender.sendMessage(Language.PREFIX + "GameMode of " + player.getName() + " set to: " + mode.name());
+        if (mode != null) {
+            player.setGameMode(mode);
+            player.sendMessage(Language.PREFIX + "GameMode set to: " + mode.name());
+            if (args.length > 1)
+                sender.sendMessage(Language.PREFIX + "GameMode of " + player.getName() + " set to: " + mode.name());
+        } else {
+            player.sendMessage(Language.PREFIX + "Illegal GameMode given: " + gm);
+        }
 
         return true;
     }

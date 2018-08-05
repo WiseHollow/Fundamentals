@@ -4,6 +4,7 @@ import com.WiseHollow.Fundamentals.Language;
 import com.WiseHollow.Fundamentals.PlayerUtil;
 import org.bukkit.BanList;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -44,7 +45,7 @@ public class CommandBan implements CommandExecutor
         else
         {
             for(int i = 1; i < args.length; i++)
-                reason+=args[i]+" ";
+                reason+=ChatColor.translateAlternateColorCodes('&', args[i])+" ";
         }
 
         //Bukkit.getBanlist(Type.NAME).addBan(username, reason, expires, source);

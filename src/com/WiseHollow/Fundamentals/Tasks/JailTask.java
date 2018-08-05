@@ -37,8 +37,9 @@ public class JailTask implements CustomTask, Listener
     {
         if (jailTasks.isEmpty())
             return;
-        for(JailTask t : jailTasks)
-            t.Disable();
+        List<JailTask> tasks = new ArrayList<>();
+        tasks.addAll(jailTasks);
+        tasks.forEach(task -> task.Disable());
     }
 
     private Player player;

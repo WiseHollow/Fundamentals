@@ -7,11 +7,10 @@ import org.bukkit.Material;
  */
 public class MaterialIndex
 {
-    @SuppressWarnings("deprecation")
     public static Material getMaterial(String input)
     {
         input = input.toUpperCase();
-        Material mat = null;
+        Material mat;
         mat = Material.getMaterial(input);
         if (mat != null)
             return mat;
@@ -19,14 +18,6 @@ public class MaterialIndex
         for(Material m : Material.values())
             if (m.name().replaceAll("_", "").equalsIgnoreCase(input))
                 return m;
-
-        int id = Integer.parseInt(input);
-        if (id > 0)
-        {
-            mat = Material.getMaterial(id);
-            if (mat != null)
-                return mat;
-        }
 
         return null;
     }

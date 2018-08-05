@@ -73,7 +73,6 @@ public class NukeTask implements CustomTask, Listener
         return true;
     }
 
-    @SuppressWarnings( "deprecation" )
     @Override
     public void Disable()
     {
@@ -91,7 +90,7 @@ public class NukeTask implements CustomTask, Listener
         {
             BlockData data = restoration.get(loc);
             loc.getBlock().setType(data.getMaterial());
-            loc.getBlock().setData(data.getData());
+            loc.getBlock().setBlockData(data.getData());
         }
         restoration.clear();
     }

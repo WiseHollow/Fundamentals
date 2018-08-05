@@ -8,6 +8,7 @@ import com.WiseHollow.Fundamentals.Tasks.GodTask;
 import com.WiseHollow.Fundamentals.Tasks.JailTask;
 import com.WiseHollow.Fundamentals.Tasks.VanishTask;
 import org.bukkit.ChatColor;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -38,7 +39,7 @@ public class CommandWhoIs implements CommandExecutor
         }
 
         sender.sendMessage(Language.PREFIX + "Player information: " + ChatColor.RESET + target.getName());
-        sender.sendMessage(Language.PREFIX_COLOR + "Health: " + ChatColor.RESET + target.getHealth() + "/" + target.getMaxHealth());
+        sender.sendMessage(Language.PREFIX_COLOR + "Health: " + ChatColor.RESET + target.getHealth() + "/" + target.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue());
         sender.sendMessage(Language.PREFIX_COLOR + "Food: " + ChatColor.RESET + target.getFoodLevel() + "/" + "20");
         sender.sendMessage(Language.PREFIX_COLOR + "Walk-Speed: " + ChatColor.RESET + target.getWalkSpeed());
         sender.sendMessage(Language.PREFIX_COLOR + "Fly-Speed: " + ChatColor.RESET + target.getFlySpeed());
