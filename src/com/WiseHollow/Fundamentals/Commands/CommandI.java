@@ -13,20 +13,16 @@ import org.bukkit.inventory.ItemStack;
 /**
  * Created by John on 10/13/2016.
  */
-public class CommandI implements CommandExecutor
-{
+public class CommandI implements CommandExecutor {
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String cmd, String[] args)
-    {
-        if (!(sender instanceof Player))
-        {
+    public boolean onCommand(CommandSender sender, Command command, String cmd, String[] args) {
+        if (!(sender instanceof Player)) {
             sender.sendMessage(Language.YouMustBeLoggedIn);
             return true;
         }
         Player player = (Player) sender;
 
-        if (!sender.hasPermission("Fundamentals.I"))
-        {
+        if (!sender.hasPermission("Fundamentals.I")) {
             sender.sendMessage(Language.DoesNotHavePermission);
             return true;
         }
@@ -35,45 +31,43 @@ public class CommandI implements CommandExecutor
             return false;
 
 
-
         String[] materialData = args[0].toUpperCase().split(":");
-        Material given;
-        try
-        {
-            given = MaterialIndex.getMaterial(materialData[0]);
-        }
-        catch(Exception ex)
-        {
-            sender.sendMessage(Language.PREFIX_WARNING + "Invalid material given.");
-            return false;
-        }
-        int amount = 64;
-        if (args.length >= 2)
-        {
-            try
-            {
-                amount = Integer.valueOf(args[1]);
+        Material given = MaterialIndex.getMaterial(materialData[0]);
+
+        if (given == null) {
+            try {
+                given = Material.getMaterial(Integer.parseInt(materialData[0]));
             }
-            catch(Exception ex)
-            {
+            catch (NumberFormatException exception) {
+                sender.sendMessage(Language.PREFIX_WARNING + "Invalid material given.");
+                return true;
+            }
+        }
+
+        if (given == null) {
+            sender.sendMessage(Language.PREFIX_WARNING + "Invalid material given.");
+            return true;
+        }
+
+        int amount = 64;
+        if (args.length >= 2) {
+            try {
+                amount = Integer.valueOf(args[1]);
+            } catch (Exception ex) {
                 sender.sendMessage(Language.PREFIX_WARNING + "Invalid amount to give.");
-                return false;
+                return true;
             }
         }
 
         if (materialData.length == 1)
             player.getInventory().addItem(new ItemStack(given, amount));
-        else
-        {
+        else {
             byte data;
-            try
-            {
+            try {
                 data = Byte.valueOf(materialData[1]);
-            }
-            catch(Exception ex)
-            {
+            } catch (Exception ex) {
                 sender.sendMessage(ex.getMessage());
-                return false;
+                return true;
             }
 
             player.getInventory().addItem(new ItemStack(given, amount, data));
