@@ -199,7 +199,7 @@ public class Settings
             }
         }
 
-        File warpFile = new File("plugins" + File.separator + "Fundamentals" + File.separator + "warps.yml");
+        File warpFile = new File("plugins" + File.separator + "FundamentalsX" + File.separator + "warps.yml");
         if (warpFile.exists())
         {
             YamlConfiguration warpConfig = YamlConfiguration.loadConfiguration(warpFile);
@@ -260,7 +260,7 @@ public class Settings
         // Warp saves
         //
 
-        File warpFile = new File("plugins" + File.separator + "Fundamentals" + File.separator + "warps.yml");
+        File warpFile = new File("plugins" + File.separator + "FundamentalsX" + File.separator + "warps.yml");
         if (!warpFile.exists())
         {
             try

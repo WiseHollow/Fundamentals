@@ -196,7 +196,7 @@ commands:
       Sudo:
                description: Force a player to run a command.
                usage: /<command> <Player> <CMD>
-      Fundamentals:
+      FundamentalsX:
                description: Interface with the plugin.
                usage: /<command> <reload>
 permissions:

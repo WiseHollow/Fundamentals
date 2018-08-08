@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 /**
  * Created by John on 10/13/2016.
  */
-public class CommandFundamentals implements CommandExecutor
+public class CommandFundamentalsX implements CommandExecutor
 {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String cmd, String[] args)

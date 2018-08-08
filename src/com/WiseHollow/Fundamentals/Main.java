@@ -129,7 +129,7 @@ public class Main extends JavaPlugin
         this.getCommand("DelHome").setExecutor(new CommandDelHome());
         this.getCommand("Workbench").setExecutor(new CommandWorkbench());
         this.getCommand("Sudo").setExecutor(new CommandSudo());
-        this.getCommand("Fundamentals").setExecutor(new CommandFundamentals());
+        this.getCommand("FundamentalsX").setExecutor(new CommandFundamentalsX());
     }
     public boolean setupMetrics()
     {
@@ -162,7 +162,7 @@ public class Main extends JavaPlugin
     @Override
     public FileConfiguration getConfig()
     {
-        File file = new File("plugins" + File.separator + "Fundamentals" + File.separator + "config.yml");
+        File file = new File("plugins" + File.separator + "FundamentalsX" + File.separator + "config.yml");
         FileConfiguration config = YamlConfiguration.loadConfiguration(file);
         return config;
     }
@@ -220,8 +220,8 @@ public class Main extends JavaPlugin
     }
     private void loadConfigFromJar()
     {
-        File configFile = new File("plugins" + File.separator + "Fundamentals" + File.separator + "config.yml");
-        File dir = new File("plugins" + File.separator + "Fundamentals");
+        File configFile = new File("plugins" + File.separator + "FundamentalsX" + File.separator + "config.yml");
+        File dir = new File("plugins" + File.separator + "FundamentalsX");
         if (!dir.isDirectory())
             dir.mkdirs();
 

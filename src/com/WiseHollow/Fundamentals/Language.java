@@ -17,4 +17,5 @@ public class Language
     public static final String CannotSendYourselfMoney = PREFIX_WARNING + "You cannot send yourself money.";
     public static final String SentMoney = PREFIX + "You sent %1 to %2.";
     public static final String ReceivedMoney = PREFIX + "You received %1 from %2.";
+    public static final String MoneySetTo = PREFIX + "Your cash balance was set to %1";
 }

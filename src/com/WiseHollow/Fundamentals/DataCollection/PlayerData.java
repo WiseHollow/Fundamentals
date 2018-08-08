@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class PlayerData implements Listener
 {
-    private static final String directory = "plugins" + File.separator + "Fundamentals" + File.separator + "Player Data";
+    private static final String directory = "plugins" + File.separator + "FundamentalsX" + File.separator + "Player Data";
     private static List<PlayerData> data = new ArrayList<>();
     public static PlayerData GetPlayerData(Player player)
     {
