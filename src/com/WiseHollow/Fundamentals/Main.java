@@ -80,9 +80,6 @@ public class Main extends JavaPlugin
         this.getCommand("Heal").setExecutor(new CommandHeal());
         this.getCommand("Kill").setExecutor(new CommandKill());
         this.getCommand("Feed").setExecutor(new CommandFeed());
-        CommandBalance cb = new CommandBalance();
-        this.getCommand("Balance").setExecutor(cb);
-        this.getCommand("Bal").setExecutor(cb);
         this.getCommand("CLS").setExecutor(new CommandClearChat());
         CommandGameMode cg = new CommandGameMode();
         this.getCommand("GameMode").setExecutor(cg);
