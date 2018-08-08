@@ -2,6 +2,7 @@ package com.WiseHollow.Fundamentals;
 
 import com.WiseHollow.Fundamentals.Commands.*;
 import com.WiseHollow.Fundamentals.DataCollection.MetricsLite;
+import com.WiseHollow.Fundamentals.Listeners.DamageEvents;
 import com.WiseHollow.Fundamentals.Listeners.PlayerEvents;
 import com.WiseHollow.Fundamentals.Listeners.SignColorEvents;
 import com.WiseHollow.Fundamentals.Tasks.JailTask;
@@ -17,16 +18,14 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.*;
 import java.util.logging.Logger;
 
-public class Main extends JavaPlugin
-{
+public class Main extends JavaPlugin {
     public static Main plugin = null;
     public static Logger logger = null;
     public static Economy economy = null;
     public static Chat chat = null;
 
     @Override
-    public void onEnable()
-    {
+    public void onEnable() {
         plugin = this;
         logger = this.getLogger();
 
@@ -42,6 +41,7 @@ public class Main extends JavaPlugin
         registerCommands();
         getServer().getPluginManager().registerEvents(new PlayerEvents(), this);
         getServer().getPluginManager().registerEvents(new SignColorEvents(), this);
+        getServer().getPluginManager().registerEvents(new DamageEvents(), this);
 
         PlayerEvents.Refresh();
 
@@ -49,19 +49,19 @@ public class Main extends JavaPlugin
 
         logger.info(plugin.getName() + " is now enabled!");
     }
+
     @Override
-    public void onDisable()
-    {
+    public void onDisable() {
         JailTask.DisableAll();
         logger.info(plugin.getName() + " is now disabled!");
     }
+
     @Override
-    public void saveDefaultConfig()
-    {
+    public void saveDefaultConfig() {
         loadConfigFromJar();
     }
-    private void registerCommands()
-    {
+
+    private void registerCommands() {
         this.getCommand("SetSpawn").setExecutor(new CommandSetSpawn());
         this.getCommand("Spawn").setExecutor(new CommandSpawn());
         this.getCommand("Back").setExecutor(new CommandBack());
@@ -131,43 +131,39 @@ public class Main extends JavaPlugin
         this.getCommand("Sudo").setExecutor(new CommandSudo());
         this.getCommand("FundamentalsX").setExecutor(new CommandFundamentalsX());
     }
-    public boolean setupMetrics()
-    {
+
+    public boolean setupMetrics() {
         if (!Settings.AllowMetrics)
             return false;
-        try
-        {
+        try {
             MetricsLite metrics = new MetricsLite(this);
             metrics.start();
             return true;
-        } catch (IOException e)
-        {
+        } catch (IOException e) {
             return false;
         }
     }
-    private boolean setupEconomy()
-    {
-        if (getServer().getPluginManager().getPlugin("Vault") == null)
-        {
+
+    private boolean setupEconomy() {
+        if (getServer().getPluginManager().getPlugin("Vault") == null) {
             return false;
         }
         RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
-        if (rsp == null)
-        {
+        if (rsp == null) {
             return false;
         }
         economy = rsp.getProvider();
         return (economy != null);
     }
+
     @Override
-    public FileConfiguration getConfig()
-    {
+    public FileConfiguration getConfig() {
         File file = new File("plugins" + File.separator + "FundamentalsX" + File.separator + "config.yml");
         FileConfiguration config = YamlConfiguration.loadConfiguration(file);
         return config;
     }
-    private boolean setupChat()
-    {
+
+    private boolean setupChat() {
         RegisteredServiceProvider<Chat> chatProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.chat.Chat.class);
         if (chatProvider != null) {
             chat = chatProvider.getProvider();
@@ -175,87 +171,69 @@ public class Main extends JavaPlugin
 
         return (chat != null);
     }
-    public static void LoadConfigFromJar(String path, Plugin plugin)
-    {
+
+    public static void LoadConfigFromJar(String path, Plugin plugin) {
         File configFile = new File(path);
-        File dir = new File(configFile.getAbsolutePath().substring(0,configFile.getAbsolutePath().lastIndexOf(File.separator)));
+        File dir = new File(configFile.getAbsolutePath().substring(0, configFile.getAbsolutePath().lastIndexOf(File.separator)));
         if (!dir.isDirectory())
             dir.mkdirs();
 
-        if (!configFile.exists())
-        {
+        if (!configFile.exists()) {
             InputStream fis = plugin.getResource("config.yml");
             FileOutputStream fos = null;
-            try
-            {
+            try {
                 configFile.createNewFile();
                 fos = new FileOutputStream(configFile);
                 byte[] buf = new byte[1024];
                 int i;
-                while ((i = fis.read(buf)) != -1)
-                {
+                while ((i = fis.read(buf)) != -1) {
                     fos.write(buf, 0, i);
                 }
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 plugin.getLogger().severe("Failed to load config from JAR");
-            } finally
-            {
-                try
-                {
-                    if (fis != null)
-                    {
+            } finally {
+                try {
+                    if (fis != null) {
                         fis.close();
                     }
-                    if (fos != null)
-                    {
+                    if (fos != null) {
                         fos.close();
                     }
-                } catch (Exception e)
-                {
+                } catch (Exception e) {
                     plugin.getLogger().severe(e.getMessage());
                 }
             }
         }
     }
-    private void loadConfigFromJar()
-    {
+
+    private void loadConfigFromJar() {
         File configFile = new File("plugins" + File.separator + "FundamentalsX" + File.separator + "config.yml");
         File dir = new File("plugins" + File.separator + "FundamentalsX");
         if (!dir.isDirectory())
             dir.mkdirs();
 
-        if (!configFile.exists())
-        {
+        if (!configFile.exists()) {
             InputStream fis = plugin.getResource("config.yml");
             FileOutputStream fos = null;
-            try
-            {
+            try {
                 configFile.createNewFile();
                 fos = new FileOutputStream(configFile);
                 byte[] buf = new byte[1024];
                 int i;
-                while ((i = fis.read(buf)) != -1)
-                {
+                while ((i = fis.read(buf)) != -1) {
                     fos.write(buf, 0, i);
                 }
-            } catch (Exception e)
-            {
+            } catch (Exception e) {
                 logger.severe("Failed to load config from JAR");
-            } finally
-            {
-                try
-                {
-                    if (fis != null)
-                    {
+            } finally {
+                try {
+                    if (fis != null) {
                         fis.close();
                     }
-                    if (fos != null)
-                    {
+                    if (fos != null) {
                         fos.close();
                     }
-                } catch (Exception e)
-                {
+                } catch (Exception e) {
                     logger.severe(e.getMessage());
                 }
             }

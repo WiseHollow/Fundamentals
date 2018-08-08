@@ -36,6 +36,9 @@ public class Settings
     public static Boolean AllowMetrics = true;
     public static int DefaultSetHomeAmount = 1;
 
+    public static boolean PreventFireDamage = false;
+    public static boolean PreventLavaDamage = false;
+
     private static HashMap<String, Integer> SetHomeCountPermissions = new HashMap<>();
     public static boolean HasPermissionForHomeAmount(Player player, int request)
     {
@@ -67,6 +70,8 @@ public class Settings
         AllowMetrics = config.getBoolean("Allow_Metrics");
         DefaultSetHomeAmount = config.getInt("Default_SetHomes");
         EnableSpawnFirstJoin = config.getBoolean("First_Join");
+        PreventFireDamage = config.getBoolean("Prevent_Fire_Damage");
+        PreventLavaDamage = config.getBoolean("Prevent_Lava_Damage");
 
         for (String s : config.getStringList("Home_Permissions"))
         {
