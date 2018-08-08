@@ -1,3 +1,9 @@
+############################################################
+# +------------------------------------------------------+ #
+# |                    Fundamentals                      | #
+# +------------------------------------------------------+ #
+############################################################
+
 # Seconds before teleport
 Teleport_Delay: 3
 # Minutes until considered away from keyboard.
@@ -13,9 +19,11 @@ Starter_Kit: 'None'
 Scheduled_Shutdown_Message: 'Server will restart in %m minutes'
 Allow_Metrics: true
 
-#
-# Kits
-#
+############################################################
+# +------------------------------------------------------+ #
+# |                  FundamentalsKits                    | #
+# +------------------------------------------------------+ #
+############################################################
 
 # delay is measured in seconds
 # Spaces between words will be converted from "_"
@@ -32,9 +40,11 @@ Kits:
             - STONE_AXE 1 0 Starter_Axe &eThis_item&f_is_received%nfrom_your_starter_kit.
             - STONE_SWORD 1 0 Starter_Sword &eThis_item&f_is_received%nfrom_your_starter_kit. DAMAGE_ALL%1
 
-#
-# Fundamentals Home
-#
+############################################################
+# +------------------------------------------------------+ #
+# |                  FundamentalsHome                    | #
+# +------------------------------------------------------+ #
+############################################################
 
 #
 # Players are allowed to have the default amount of sethomes. If you wish for a player to be able to make more,
@@ -45,3 +55,24 @@ Kits:
 Default_SetHomes: 1
 Home_Permissions:
     - VIP 5
+
+############################################################
+# +------------------------------------------------------+ #
+# |                 FundamentalsEconomy                  | #
+# +------------------------------------------------------+ #
+############################################################
+
+# The starting balance new players have in their wallet.
+Starting_Balance: 20
+# When using '/money' or '/bal', what symbol should be used as a prefix to the shown balance?
+Currency_Symbol: '$'
+# What is the singular word when referring to your currency?
+Currency_Singular: 'credit'
+# What is the plural word when referring to your currency?
+Currency_Plural: 'credits'
+# What is the maximum amount of money a player can have? Do not put more than 10000000000000.
+Max_Balance: 10000000000000
+# What is the minimum amount of money a player can have? Player must have permission of
+Min_Balance: -10000
+# What is the minimal to be paid with '/pay' ?
+Min_Pay_Amount: 0.01
