@@ -2,7 +2,6 @@ package com.WiseHollow.Fundamentals.Commands;
 
 import com.WiseHollow.Fundamentals.Language;
 import com.WiseHollow.Fundamentals.MaterialIndex;
-import com.WiseHollow.Fundamentals.PlayerUtil;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -37,15 +36,10 @@ public class CommandI implements CommandExecutor
 
 
         String[] materialData = args[0].toUpperCase().split(":");
-        Material given;
-        try
-        {
-            given = MaterialIndex.getMaterial(materialData[0]);
-        }
-        catch(Exception ex)
-        {
+        Material given = MaterialIndex.getMaterial(materialData[0]);
+        if (given == null) {
             sender.sendMessage(Language.PREFIX_WARNING + "Invalid material given.");
-            return false;
+            return true;
         }
         int amount = 64;
         if (args.length >= 2)
@@ -57,7 +51,7 @@ public class CommandI implements CommandExecutor
             catch(Exception ex)
             {
                 sender.sendMessage(Language.PREFIX_WARNING + "Invalid amount to give.");
-                return false;
+                return true;
             }
         }
 
@@ -73,7 +67,7 @@ public class CommandI implements CommandExecutor
             catch(Exception ex)
             {
                 sender.sendMessage(ex.getMessage());
-                return false;
+                return true;
             }
 
             player.getInventory().addItem(new ItemStack(given, amount, data));

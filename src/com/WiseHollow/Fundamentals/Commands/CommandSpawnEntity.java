@@ -37,14 +37,29 @@ public class CommandSpawnEntity implements CommandExecutor
         if (args.length == 0)
             return false;
 
-        EntityType type = EntityType.valueOf(args[0].toUpperCase());
-        if (type != null)
-        {
-            Set<Material> s = null;
-            Location target = player.getTargetBlock(s, 100).getLocation().clone().add(0, 1, 0);
-            target.getWorld().spawnEntity(target, type);
-            sender.sendMessage(Language.PREFIX + type.name() + " spawned at location.");
+        Integer amount = 1;
+        if (args.length == 2) {
+            try {
+                amount = Integer.parseInt(args[1]);
+            } catch (NumberFormatException exception) {
+                sender.sendMessage(Language.PREFIX + "'" + amount + "' is not an number.");
+            }
         }
+
+        EntityType type;
+        try {
+            type = EntityType.valueOf(args[0].toUpperCase());
+        } catch (Exception exception) {
+            sender.sendMessage(Language.PREFIX_WARNING + "Invalid entity type.");
+            return true;
+        }
+
+        Set<Material> s = null;
+        Location target = player.getTargetBlock(s, 100).getLocation().clone().add(0.5, 1, 0.5);
+        for (int i = 0; i < amount; i++) {
+            target.getWorld().spawnEntity(target, type);
+        }
+        sender.sendMessage(Language.PREFIX + amount + " " + type.name() + " spawned at location.");
 
         return true;
     }
