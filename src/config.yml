@@ -47,7 +47,7 @@ Kits:
             - STONE_PICKAXE 1 0 Starter_Pickaxe &eThis_item&f_is_received%nfrom_your_starter_kit.
             - STONE_SPADE 1 0 Start_Spade &eThis_item&f_is_received%nfrom_your_starter_kit.
             - STONE_AXE 1 0 Starter_Axe &eThis_item&f_is_received%nfrom_your_starter_kit.
-            - STONE_SWORD 1 0 Starter_Sword &eThis_item&f_is_received%nfrom_your_starter_kit. DAMAGE_ALL%1
+            - STONE_SWORD 1 0 Starter_Sword &eThis_item&f_is_received%nfrom_your_starter_kit. sharpness%1
 
 ############################################################
 # +------------------------------------------------------+ #
@@ -85,3 +85,14 @@ Max_Balance: 10000000000000
 Min_Balance: -10000
 # What is the minimal to be paid with '/pay' ?
 Min_Pay_Amount: 0.01
+
+############################################################
+# +------------------------------------------------------+ #
+# |                   FundamentalsChat                   | #
+# +------------------------------------------------------+ #
+############################################################
+
+# Replace certain expressions with emojis.
+Emoji_Chat: true
+# Play a sound and text notification for a player when someone uses @TheirUsername.
+Player_Mention: true

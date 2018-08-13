@@ -47,7 +47,7 @@ public class CommandEnchant implements CommandExecutor
             return true;
         }
 
-        Enchantment enchantment = EnchantmentWrapper.getByKey(NamespacedKey.minecraft(args[0]));
+        Enchantment enchantment = EnchantmentWrapper.getByKey(NamespacedKey.minecraft(args[0].toLowerCase()));
 
         int level = 1;
         if (args.length > 1) {
