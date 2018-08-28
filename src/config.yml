@@ -12,11 +12,17 @@ Afk_Delay: 3
 Sign_Colors: true
 # If a location has been set for First Join (/setspawn fs) then make sure to have this set to true.
 First_Join: true
+# Colors are prefixed with '&' and '%p' refers to the player name.
 Join_Message: '&e%p has joined the game!'
+# Colors are prefixed with '&' and '%p' refers to the player name.
 Quit_Message: '&e%p has left the game!'
+# Setting this to 'true' would allow '/enchant' to create enchant levels above normal.
 Allow_Unsafe_Enchantments: false
+# What kit should be given to new players. Set 'None' to not give any.
 Starter_Kit: 'None'
+# When using '/stop 10' to stop the server in 10 minutes, what should we broadcast on the server.
 Scheduled_Shutdown_Message: 'Server will restart in %m minutes'
+# Allow EssentialsX to report back data about your server.
 Allow_Metrics: true
 
 ############################################################
@@ -25,7 +31,9 @@ Allow_Metrics: true
 # +------------------------------------------------------+ #
 ############################################################
 
+# Stops players from being hurt by fire.
 Prevent_Fire_Damage: false
+# Stops players from being hurt by lava.
 Prevent_Lava_Damage: false
 
 ############################################################

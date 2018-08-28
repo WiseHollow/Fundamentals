@@ -36,15 +36,10 @@ public class CommandGive implements CommandExecutor
 
             String[] materialData = args[1].toUpperCase().split(":");
 
-            Material given;
-            try
-            {
-                given = MaterialIndex.getMaterial(materialData[0]);
-            }
-            catch(Exception ex)
-            {
+            Material given = MaterialIndex.getMaterial(materialData[0]);
+            if (given == null) {
                 sender.sendMessage(Language.PREFIX_WARNING + "Invalid material given.");
-                return false;
+                return true;
             }
             int amount = 64;
             if (args.length == 3)
@@ -56,27 +51,11 @@ public class CommandGive implements CommandExecutor
                 catch(Exception ex)
                 {
                     sender.sendMessage(Language.PREFIX_WARNING + "Invalid amount to give.");
-                    return false;
+                    return true;
                 }
             }
 
-            if (materialData.length == 1)
-                target.getInventory().addItem(new ItemStack(given, amount));
-            else
-            {
-                byte data;
-                try
-                {
-                    data = Byte.valueOf(materialData[1]);
-                }
-                catch(Exception ex)
-                {
-                    sender.sendMessage(ex.getMessage());
-                    return false;
-                }
-
-                target.getInventory().addItem(new ItemStack(given, amount, data));
-            }
+            target.getInventory().addItem(new ItemStack(given, amount));
             target.sendMessage(Language.PREFIX_COLOR + "You were given x" + amount + " of " + given.name());
 
         }
