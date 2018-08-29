@@ -104,3 +104,11 @@ Min_Pay_Amount: 0.01
 Emoji_Chat: true
 # Play a sound and text notification for a player when someone uses @TheirUsername.
 Player_Mention: true
+# Prefixes with hoverable text. This will overwrite the default chat format and only show prefixes defined below.
+Use_Affixes: false
+Affixes:
+  '&a● &r': '&aOwner'
+  '&c● &r': '&cAdministrator'
+  '&5● &r': '&5Moderator'
+  '&9● &r': '&9Builder'
+  '&e● &r': '&eSupporter'
