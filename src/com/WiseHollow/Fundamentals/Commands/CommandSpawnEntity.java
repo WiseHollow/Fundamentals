@@ -7,9 +7,8 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Set;
 
@@ -47,17 +46,31 @@ public class CommandSpawnEntity implements CommandExecutor
         }
 
         EntityType type;
+        boolean tamed = false;
+        String[] typeWithArg = args[0].split(":");
         try {
-            type = EntityType.valueOf(args[0].toUpperCase());
+            type = EntityType.valueOf(typeWithArg[0].toUpperCase());
         } catch (Exception exception) {
             sender.sendMessage(Language.PREFIX_WARNING + "Invalid entity type.");
             return true;
         }
 
+        if (typeWithArg.length > 1 && typeWithArg[1].equalsIgnoreCase("tamed")) {
+            tamed = true;
+        }
+
         Set<Material> s = null;
         Location target = player.getTargetBlock(s, 100).getLocation().clone().add(0.5, 1, 0.5);
         for (int i = 0; i < amount; i++) {
-            target.getWorld().spawnEntity(target, type);
+            LivingEntity spawnedEntity = (LivingEntity) target.getWorld().spawnEntity(target, type);
+            if (tamed && spawnedEntity instanceof Tameable) {
+                Tameable tameable = (Tameable) spawnedEntity;
+                tameable.setOwner(player);
+                tameable.setTamed(true);
+                if (spawnedEntity instanceof Horse) {
+                    ((Horse) spawnedEntity).getInventory().setSaddle(new ItemStack(Material.SADDLE));
+                }
+            }
         }
         sender.sendMessage(Language.PREFIX + amount + " " + type.name() + " spawned at location.");
 
