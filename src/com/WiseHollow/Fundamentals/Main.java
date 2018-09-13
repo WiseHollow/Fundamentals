@@ -70,6 +70,7 @@ public class Main extends JavaPlugin {
         this.getCommand("TPA").setExecutor(new CommandTPA());
         this.getCommand("TPAccept").setExecutor(new CommandTPAccept());
         this.getCommand("TPDeny").setExecutor(new CommandTPDeny());
+        this.getCommand("TPToggle").setExecutor(new CommandTeleportToggle());
         this.getCommand("Vanish").setExecutor(new CommandVanish());
         this.getCommand("Msg").setExecutor(new CommandMessage());
         this.getCommand("R").setExecutor(new CommandReply());

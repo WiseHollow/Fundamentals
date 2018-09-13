@@ -31,6 +31,9 @@ commands:
       TPDeny:
                description: Deny teleport request of another player.
                usage: /<command>
+      TPToggle:
+               description: Toggle the ability to get teleported to.
+               usage: /<command>
       Vanish:
                description: Make yourself invisible to others.
                usage: /<command>
@@ -232,6 +235,7 @@ permissions:
                      Fundamentals.Kits.*: true
                      Fundamentals.Enchant: true
                      Fundamentals.Workbench: true
+                     Fundamentals.TPToggle: true
                      Fundamentals.Sudo: true
       Fundamentals.Moderator:
                description: Gives access to all Admin commands.
@@ -407,6 +411,9 @@ permissions:
                default: op
       Fundamentals.TPDeny:
                description: Deny teleport request from a player.
+               default: op
+      Fundamentals.TPToggle:
+               description: Toggle the ability for others to teleport to you.
                default: op
       Fundamentals.TPS:
                description: Display the tick speed, and memory usage.
