@@ -1,5 +1,6 @@
 package com.WiseHollow.Fundamentals.Commands;
 
+import com.WiseHollow.Fundamentals.DataCollection.PlayerData;
 import com.WiseHollow.Fundamentals.Language;
 import com.WiseHollow.Fundamentals.Main;
 import com.WiseHollow.Fundamentals.Permissions.PermissionCheck;
@@ -15,42 +16,37 @@ import java.util.HashMap;
 /**
  * Created by John on 10/13/2016.
  */
-public class CommandTPA implements CommandExecutor
-{
+public class CommandTPA implements CommandExecutor {
     public static HashMap<Player, Player> tpaHash = new HashMap<>();
     public static HashMap<Player, Integer> tpaTaskIDs = new HashMap<>();
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String cmd, String[] args)
-    {
-        if (!(sender instanceof Player))
-        {
+    public boolean onCommand(CommandSender sender, Command command, String cmd, String[] args) {
+        if (!(sender instanceof Player)) {
             sender.sendMessage(Language.YouMustBeLoggedIn);
             return true;
         }
 
         Player player = (Player) sender;
-        if (!sender.hasPermission("Fundamentals.TPA"))
-        {
+        if (!sender.hasPermission("Fundamentals.TPA")) {
             player.sendMessage(Language.DoesNotHavePermission);
             return true;
         }
 
-        if (args.length != 1)
-        {
+        if (args.length != 1) {
             return false;
         }
 
         Player target = PlayerUtil.GetPlayer(args[0]);
+        PlayerData targetData = PlayerData.GetPlayerData(target);
 
-        if (target == null || !target.isOnline())
-        {
+        if (target == null || !target.isOnline()) {
             player.sendMessage(Language.PlayerMustBeLoggedIn);
             return true;
+        } else if (targetData != null && targetData.hasTeleportDisabled()) {
+            player.sendMessage(Language.PREFIX_COLOR + Language.HasTeleportDisabled);
+            return true;
         }
-
-        if (tpaHash.containsKey(player))
-            tpaHash.remove(player);
 
         tpaHash.put(player, target);
         player.sendMessage(Language.PREFIX_COLOR + "Teleport request sent!");
@@ -58,11 +54,10 @@ public class CommandTPA implements CommandExecutor
 
         tpaTaskIDs.put(player, Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.plugin, () ->
         {
-            if (tpaHash.containsKey(player) && tpaHash.get(player).equals(target))
-            {
+            if (tpaHash.containsKey(player) && tpaHash.get(player).equals(target)) {
                 tpaHash.remove(player);
             }
-        }, 20*60*2));
+        }, 20 * 60 * 2));
 
         return true;
     }

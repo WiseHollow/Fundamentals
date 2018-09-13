@@ -1,5 +1,6 @@
 package com.WiseHollow.Fundamentals.Commands;
 
+import com.WiseHollow.Fundamentals.DataCollection.PlayerData;
 import com.WiseHollow.Fundamentals.Language;
 import com.WiseHollow.Fundamentals.Permissions.PermissionCheck;
 import com.WiseHollow.Fundamentals.PlayerUtil;
@@ -13,35 +14,28 @@ import org.bukkit.entity.Player;
 /**
  * Created by John on 10/13/2016.
  */
-public class CommandTeleport implements CommandExecutor
-{
+public class CommandTeleport implements CommandExecutor {
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String cmd, String[] args)
-    {
-        if (!(sender instanceof Player))
-        {
+    public boolean onCommand(CommandSender sender, Command command, String cmd, String[] args) {
+        if (!(sender instanceof Player)) {
             sender.sendMessage(Language.YouMustBeLoggedIn);
             return true;
         }
 
         Player player = (Player) sender;
-        if (!sender.hasPermission("Fundamentals.TP"))
-        {
+        if (!sender.hasPermission("Fundamentals.TP")) {
             sender.sendMessage(Language.DoesNotHavePermission);
             return true;
         }
 
-        if (args.length == 0)
-        {
+        if (args.length == 0) {
             return false;
         }
 
-        if (args.length == 1)
-        {
+        if (args.length == 1) {
             Player target = PlayerUtil.GetPlayer(args[0]);
 
-            if (target == null || !target.isOnline())
-            {
+            if (target == null || !target.isOnline()) {
                 player.sendMessage(Language.PlayerMustBeLoggedIn);
                 return true;
             }
@@ -50,20 +44,19 @@ public class CommandTeleport implements CommandExecutor
             task.Run();
 
             return true;
-        }
-        else if (args.length == 2 && sender.hasPermission("Fundamentals.TP.Other"))
-        {
+        } else if (args.length == 2 && sender.hasPermission("Fundamentals.TP.Other")) {
             Player source = PlayerUtil.GetPlayer(args[0]);
             Player target = PlayerUtil.GetPlayer(args[1]);
+            PlayerData targetData = PlayerData.GetPlayerData(target);
 
-            if (target == null || !target.isOnline())
-            {
+            if (target == null || !target.isOnline()) {
                 player.sendMessage(Language.PlayerMustBeLoggedIn);
                 return true;
-            }
-            else if (source == null || !source.isOnline())
-            {
+            } else if (source == null || !source.isOnline()) {
                 player.sendMessage(Language.PREFIX_COLOR + Language.PlayerMustBeLoggedIn);
+                return true;
+            } else if (targetData != null && targetData.hasTeleportDisabled()) {
+                player.sendMessage(Language.PREFIX_COLOR + Language.HasTeleportDisabled);
                 return true;
             }
 

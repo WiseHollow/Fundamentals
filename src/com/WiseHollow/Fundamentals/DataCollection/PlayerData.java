@@ -19,47 +19,42 @@ import java.util.List;
 /**
  * Created by John on 10/20/2016.
  */
-public class PlayerData implements Listener
-{
+public class PlayerData implements Listener {
     private static final String directory = "plugins" + File.separator + "FundamentalsX" + File.separator + "Player Data";
     private static List<PlayerData> data = new ArrayList<>();
-    public static PlayerData GetPlayerData(Player player)
-    {
+
+    public static PlayerData GetPlayerData(Player player) {
         for (PlayerData pd : data)
             if (pd.uuid.equalsIgnoreCase(player.getUniqueId().toString()))
                 return pd;
         return null;
     }
-    public static PlayerData GetPlayerData(String uuid)
-    {
+
+    public static PlayerData GetPlayerData(String uuid) {
         for (PlayerData pd : data)
             if (pd.uuid.equalsIgnoreCase(uuid))
                 return pd;
         return null;
     }
-    public static void UnloadPlayerData(Player player)
-    {
+
+    public static void UnloadPlayerData(Player player) {
         data.remove(GetPlayerData(player));
     }
-    public static void UnloadPlayerData(PlayerData player)
-    {
+
+    public static void UnloadPlayerData(PlayerData player) {
         data.remove(player);
     }
-    public static void LoadPlayerData(Player player)
-    {
+
+    public static void LoadPlayerData(Player player) {
         File dir = new File(directory);
         if (!dir.isDirectory())
             dir.mkdirs();
         File file = new File(directory + File.separator + player.getUniqueId().toString() + ".yml");
-        if (!file.exists())
-        {
-            try
-            {
+        if (!file.exists()) {
+            try {
                 file.createNewFile();
                 Main.logger.info("Creating player data for: " + player.getName() + " ID: " + player.getUniqueId().toString());
-            }
-            catch(IOException ex)
-            {
+            } catch (IOException ex) {
                 Main.logger.severe(ex.getMessage());
                 return;
             }
@@ -68,11 +63,16 @@ public class PlayerData implements Listener
         PlayerData profile = new PlayerData(player);
 
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
-        if (config.getConfigurationSection("Homes") != null)
-        {
+
+        Boolean teleportDisabled = false;
+        if (config.isBoolean("TeleportDisabled")) {
+            teleportDisabled = config.getBoolean("TeleportDisabled");
+        }
+        profile.teleportDisabled = teleportDisabled;
+
+        if (config.getConfigurationSection("Homes") != null) {
             HashMap<String, Location> homes = new HashMap<>();
-            for(String key : config.getConfigurationSection("Homes").getKeys(false))
-            {
+            for (String key : config.getConfigurationSection("Homes").getKeys(false)) {
                 World world = Bukkit.getWorld(config.getString("Homes." + key + ".Location.World"));
                 int x = config.getInt("Homes." + key + ".Location.X");
                 int y = config.getInt("Homes." + key + ".Location.Y");
@@ -96,17 +96,21 @@ public class PlayerData implements Listener
     private String name;
     private HashMap<String, Location> homes;
     private Location lastLocation;
+    private Boolean teleportDisabled;
 
-    public PlayerData(Player player)
-    {
+    public PlayerData(Player player) {
         this.uuid = player.getUniqueId().toString();
         this.name = player.getName();
         this.homes = new HashMap<>();
         this.lastLocation = player.getLocation();
+        this.teleportDisabled = false;
     }
-    public HashMap<String, Location> getHomes() { return homes; }
-    public boolean setHome(String name)
-    {
+
+    public HashMap<String, Location> getHomes() {
+        return homes;
+    }
+
+    public boolean setHome(String name) {
         name = name.toLowerCase();
         Player player = Bukkit.getPlayer(this.name);
         if (player == null)
@@ -116,8 +120,8 @@ public class PlayerData implements Listener
         save();
         return true;
     }
-    public boolean deleteHome(String name)
-    {
+
+    public boolean deleteHome(String name) {
         name = name.toLowerCase();
         if (!homes.containsKey(name))
             return false;
@@ -126,34 +130,43 @@ public class PlayerData implements Listener
         save();
         return true;
     }
-    public Location getHome(String name)
-    {
+
+    public Location getHome(String name) {
         name = name.toLowerCase();
         if (!homes.containsKey(name))
             return null;
         return homes.get(name);
     }
-    public void save()
-    {
+
+    public void setTeleportDisabled(boolean disabled) {
+        this.teleportDisabled = disabled;
+        save();
+    }
+
+    public Boolean hasTeleportDisabled() {
+        return teleportDisabled;
+    }
+
+    public void save() {
         File dir = new File(directory);
         if (!dir.isDirectory())
             dir.mkdirs();
         File file = new File(directory + File.separator + uuid + ".yml");
-        if (!file.exists())
-        {
-            try
-            {
+        if (!file.exists()) {
+            try {
                 file.createNewFile();
                 Main.logger.info("Creating player data for: " + name + " ID: " + uuid);
-            }
-            catch(IOException ex)
-            {
+            } catch (IOException ex) {
                 Main.logger.severe(ex.getMessage());
                 return;
             }
         }
 
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
+
+        if (teleportDisabled || config.isBoolean("TeleportDisabled")) {
+            config.set("TeleportDisabled", teleportDisabled);
+        }
 
         config.set("LastPosition.Location.World", lastLocation.getWorld().getName());
         config.set("LastPosition.Location.X", lastLocation.getBlockX());
@@ -163,8 +176,7 @@ public class PlayerData implements Listener
         config.set("LastPosition.Location.Pitch", lastLocation.getPitch());
 
         config.set("Homes", null);
-        for(String key : homes.keySet())
-        {
+        for (String key : homes.keySet()) {
             Location loc = homes.get(key);
             config.set("Homes." + key + ".Location.World", loc.getWorld().getName());
             config.set("Homes." + key + ".Location.X", loc.getBlockX());
@@ -174,23 +186,20 @@ public class PlayerData implements Listener
             config.set("Homes." + key + ".Location.Pitch", loc.getPitch());
         }
 
-        try
-        {
+        try {
             config.save(file);
-        }
-        catch(IOException ex)
-        {
+        } catch (IOException ex) {
             Main.logger.severe(ex.getMessage());
             return;
         }
     }
-    private void setHomes(HashMap<String, Location> homes)
-    {
+
+    private void setHomes(HashMap<String, Location> homes) {
         this.homes = homes;
     }
+
     @EventHandler
-    public void SaveOnExit(PlayerQuitEvent event)
-    {
+    public void SaveOnExit(PlayerQuitEvent event) {
         save();
         UnloadPlayerData(this);
         event.getHandlers().unregister(this);
