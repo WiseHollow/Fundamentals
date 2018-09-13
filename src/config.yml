@@ -106,6 +106,8 @@ Emoji_Chat: true
 Player_Mention: true
 # Prefixes with hoverable text. This will overwrite the default chat format and only show prefixes defined below.
 Use_Affixes: false
+# When a player has the prefix defined below; hovering over it will display the message next to it.
+# This is great for compressing those messy chat messages and keeping things more organized.
 Affixes:
   '&a● &r': '&aOwner'
   '&c● &r': '&cAdministrator'
