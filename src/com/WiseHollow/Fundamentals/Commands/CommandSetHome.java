@@ -29,9 +29,6 @@ public class CommandSetHome implements CommandExecutor
             return true;
         }
 
-        if (args.length == 0)
-            return false;
-
         PlayerData pd = PlayerData.GetPlayerData(player);
 
         int amount = pd.getHomes().size();
@@ -41,10 +38,10 @@ public class CommandSetHome implements CommandExecutor
             return true;
         }
 
-        String name = args[0];
+        String name = args.length > 0 ? args[0] : "home";
         pd.setHome(name);
 
-        player.sendMessage(Language.PREFIX + "Home has been set!");
+        player.sendMessage(Language.PREFIX + "Your position is now accessable with '/home " + name + "'!");
         return true;
     }
 }
