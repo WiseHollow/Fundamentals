@@ -34,9 +34,13 @@ public class CommandTeleport implements CommandExecutor {
 
         if (args.length == 1) {
             Player target = PlayerUtil.GetPlayer(args[0]);
+            PlayerData targetData = PlayerData.GetPlayerData(target);
 
             if (target == null || !target.isOnline()) {
                 player.sendMessage(Language.PlayerMustBeLoggedIn);
+                return true;
+            } else if (targetData != null && targetData.hasTeleportDisabled()) {
+                player.sendMessage(Language.PREFIX_COLOR + Language.HasTeleportDisabled);
                 return true;
             }
 
