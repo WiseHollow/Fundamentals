@@ -17,13 +17,10 @@ import org.bukkit.entity.Player;
 /**
  * Created by John on 10/13/2016.
  */
-public class CommandWhoIs implements CommandExecutor
-{
+public class CommandWhoIs implements CommandExecutor {
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String cmd, String[] args)
-    {
-        if (!sender.hasPermission("Fundamentals.WhoIs"))
-        {
+    public boolean onCommand(CommandSender sender, Command command, String cmd, String[] args) {
+        if (!sender.hasPermission("Fundamentals.WhoIs")) {
             sender.sendMessage(Language.DoesNotHavePermission);
             return true;
         }
@@ -32,8 +29,7 @@ public class CommandWhoIs implements CommandExecutor
             return false;
 
         Player target = PlayerUtil.GetPlayer(args[0]);
-        if (target == null || ! target.isOnline())
-        {
+        if (target == null || !target.isOnline()) {
             sender.sendMessage(Language.PlayerMustBeLoggedIn);
             return true;
         }

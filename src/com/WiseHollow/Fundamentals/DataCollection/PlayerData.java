@@ -3,18 +3,25 @@ package com.WiseHollow.Fundamentals.DataCollection;
 import com.WiseHollow.Fundamentals.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.*;
 
 /**
  * Created by John on 10/20/2016.
@@ -45,7 +52,7 @@ public class PlayerData implements Listener {
         data.remove(player);
     }
 
-    public static void LoadPlayerData(Player player) {
+    public static Optional<PlayerData> LoadPlayerData(OfflinePlayer player) {
         File dir = new File(directory);
         if (!dir.isDirectory())
             dir.mkdirs();
@@ -56,11 +63,11 @@ public class PlayerData implements Listener {
                 Main.logger.info("Creating player data for: " + player.getName() + " ID: " + player.getUniqueId().toString());
             } catch (IOException ex) {
                 Main.logger.severe(ex.getMessage());
-                return;
+                return Optional.empty();
             }
         }
 
-        PlayerData profile = new PlayerData(player);
+        PlayerData profile = new PlayerData(player instanceof Player ? ((Player) player) : player);
 
         YamlConfiguration config = YamlConfiguration.loadConfiguration(file);
 
@@ -69,6 +76,18 @@ public class PlayerData implements Listener {
             teleportDisabled = config.getBoolean("TeleportDisabled");
         }
         profile.teleportDisabled = teleportDisabled;
+
+        if (config.getConfigurationSection("LastPosition") != null) {
+            World world = Bukkit.getWorld(config.getString("LastPosition.Location.World"));
+            int x = config.getInt("LastPosition.Location.X");
+            int y = config.getInt("LastPosition.Location.Y");
+            int z = config.getInt("LastPosition.Location.Z");
+            float pitch = (float) config.getDouble("LastPosition.Location.Pitch");
+            float yaw = (float) config.getDouble("LastPosition.Location.Yaw");
+
+            Location lastPosition = new Location(world, x, y, z, yaw, pitch);
+            profile.lastLocation = lastPosition;
+        }
 
         if (config.getConfigurationSection("Homes") != null) {
             HashMap<String, Location> homes = new HashMap<>();
@@ -90,6 +109,7 @@ public class PlayerData implements Listener {
 
         Bukkit.getPluginManager().registerEvents(profile, Main.plugin);
         data.add(profile);
+        return Optional.of(profile);
     }
 
     private String uuid;
@@ -98,16 +118,26 @@ public class PlayerData implements Listener {
     private Location lastLocation;
     private Boolean teleportDisabled;
 
-    public PlayerData(Player player) {
+    public PlayerData(OfflinePlayer player) {
         this.uuid = player.getUniqueId().toString();
         this.name = player.getName();
         this.homes = new HashMap<>();
-        this.lastLocation = player.getLocation();
         this.teleportDisabled = false;
+        if (player.isOnline()) {
+            this.lastLocation = ((Player) player).getLocation();
+        }
+    }
+
+    public String getName() {
+        return name;
     }
 
     public HashMap<String, Location> getHomes() {
         return homes;
+    }
+
+    public Location getLastLocation() {
+        return lastLocation;
     }
 
     public boolean setHome(String name) {

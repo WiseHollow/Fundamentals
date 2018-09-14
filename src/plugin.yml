@@ -172,6 +172,9 @@ commands:
       Nametag:
                description: Receive a nametag of given name.
                usage: /<command> <Name_Of_Tag>
+      Seen:
+               description: Get last-seen details of an offline player.
+               usage: /<command> <Player>
       Stop:
                description: Stop the server now, or within specified minutes.
                usage: /<command> <Minutes>
@@ -238,13 +241,15 @@ permissions:
                      Fundamentals.TPToggle: true
                      Fundamentals.Sudo: true
       Fundamentals.Moderator:
-               description: Gives access to all Admin commands.
+               description: Gives access to all Moderator commands.
                default: op
                children:
                      Fundamentals.Player.*: true
                      Fundamentals.Teleport: true
                      Fundamentals.Teleport.Other: true
                      Fundamentals.Jail: true
+                     Fundamentals.Seen: true
+                     Fundamentals.Who: true
                      Fundamentals.WhoIs: true
                      Fundamentals.Kick: true
                      Fundamentals.Ban: true
@@ -259,13 +264,13 @@ permissions:
                      Fundamentals.Warp: true
                      Fundamentals.Warps.*: true
       Fundamentals.Poweruser:
-               description: Gives access to all Admin commands.
+               description: Gives access to all Power-User commands.
                default: op
                children:
                      Fundamentals.Player.*: true
                      Fundamentals.Back.OnDeath: true
       Fundamentals.Player:
-               description: Gives access to all Admin commands.
+               description: Gives access to all Player commands.
                default: op
                children:
                      Fundamentals.Spawn: true
@@ -276,7 +281,6 @@ permissions:
                      Fundamentals.TPA: true
                      Fundamentals.TPAccept: true
                      Fundamentals.TPDeny: true
-                     Fundamentals.Who: true
                      Fundamentals.Kit: true
                      Fundamentals.Home: true
                      Fundamentals.SetHome: true
@@ -393,6 +397,9 @@ permissions:
                default: op
       Fundamentals.Speed:
                description: Set your fly and walk speed (1-10).
+               default: op
+      Fundamentals.Seen:
+               description: Get last-seen details of an offline player.
                default: op
       Fundamentals.TP:
                description: Teleport to a player.

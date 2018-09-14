@@ -110,6 +110,7 @@ public class Main extends JavaPlugin {
         this.getCommand("UnJail").setExecutor(new CommandUnjail());
         this.getCommand("ListJail").setExecutor(new CommandListJail());
         this.getCommand("WhoIs").setExecutor(new CommandWhoIs());
+        this.getCommand("Seen").setExecutor(new CommandSeen());
         this.getCommand("Nuke").setExecutor(new CommandNuke());
         this.getCommand("Smite").setExecutor(new CommandSmite());
         this.getCommand("Sun").setExecutor(new CommandSun());

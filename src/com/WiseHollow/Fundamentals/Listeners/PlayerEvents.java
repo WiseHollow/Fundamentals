@@ -28,12 +28,9 @@ import static com.WiseHollow.Fundamentals.Tasks.TeleportTask.PreviousLocation;
 /**
  * Created by John on 10/14/2016.
  */
-public class PlayerEvents implements Listener
-{
-    public static void Refresh()
-    {
-        for(Player p : Bukkit.getOnlinePlayers())
-        {
+public class PlayerEvents implements Listener {
+    public static void Refresh() {
+        for (Player p : Bukkit.getOnlinePlayers()) {
             if (AFKDetectTask.GetTask(p) != null)
                 return;
 
@@ -43,8 +40,7 @@ public class PlayerEvents implements Listener
     }
 
     @EventHandler(priority = EventPriority.HIGH)
-    public void FirstJoinSpawn(PlayerJoinEvent event)
-    {
+    public void FirstJoinSpawn(PlayerJoinEvent event) {
         if (event.getPlayer().hasPlayedBefore() || Settings.SpawnFirstJoin == null || !Settings.EnableSpawnFirstJoin)
             return;
 
@@ -55,8 +51,7 @@ public class PlayerEvents implements Listener
     }
 
     @EventHandler
-    public void StarterKit(PlayerJoinEvent event)
-    {
+    public void StarterKit(PlayerJoinEvent event) {
         if (event.getPlayer().hasPlayedBefore() || Settings.StarterKit.equalsIgnoreCase("None"))
             return;
 
@@ -88,8 +83,7 @@ public class PlayerEvents implements Listener
     }
 
     @EventHandler
-    public void AFKTaskOnLogin(PlayerJoinEvent event)
-    {
+    public void AFKTaskOnLogin(PlayerJoinEvent event) {
         if (AFKDetectTask.GetTask(event.getPlayer()) != null)
             return;
 
@@ -98,8 +92,7 @@ public class PlayerEvents implements Listener
     }
 
     @EventHandler
-    public void LoginMessage(PlayerJoinEvent event)
-    {
+    public void LoginMessage(PlayerJoinEvent event) {
         Integer online = Bukkit.getOnlinePlayers().stream()
                 .filter(player -> (!player.hasMetadata("vanished") || player.getMetadata("vanished").equals(false)))
                 .collect(Collectors.toList()).size();
@@ -113,14 +106,12 @@ public class PlayerEvents implements Listener
     }
 
     @EventHandler
-    public void QuitMessage(PlayerQuitEvent event)
-    {
+    public void QuitMessage(PlayerQuitEvent event) {
         event.setQuitMessage(Settings.QuitMessage.replace("%p", event.getPlayer().getName()));
     }
 
     @EventHandler
-    public void OnQuit(PlayerQuitEvent event)
-    {
+    public void OnQuit(PlayerQuitEvent event) {
         AFKDetectTask task = AFKDetectTask.GetTask(event.getPlayer());
         if (task == null)
             return;
@@ -128,8 +119,7 @@ public class PlayerEvents implements Listener
     }
 
     @EventHandler
-    public void RecordTeleport(PlayerTeleportEvent event)
-    {
+    public void RecordTeleport(PlayerTeleportEvent event) {
         if (event.isCancelled())
             return;
 
@@ -137,23 +127,20 @@ public class PlayerEvents implements Listener
     }
 
     @EventHandler
-    public void RecordTeleportOnDeath(PlayerDeathEvent event)
-    {
+    public void RecordTeleportOnDeath(PlayerDeathEvent event) {
         if (event.getEntity().hasPermission("Fundamentals.Back.OnDeath"))
             PreviousLocation.put(event.getEntity(), event.getEntity().getLocation());
     }
 
     @EventHandler
-    public void TeleportWithHorse(PlayerTeleportEvent event)
-    {
+    public void TeleportWithHorse(PlayerTeleportEvent event) {
         if (event.isCancelled())
             return;
 
         if (event.getCause() != PlayerTeleportEvent.TeleportCause.COMMAND && event.getCause() != PlayerTeleportEvent.TeleportCause.PLUGIN)
             return;
 
-        if (event.getPlayer().getVehicle() != null)
-        {
+        if (event.getPlayer().getVehicle() != null) {
             Vehicle v = (Vehicle) event.getPlayer().getVehicle();
             event.getPlayer().leaveVehicle();
             v.teleport(event.getTo());
@@ -163,27 +150,23 @@ public class PlayerEvents implements Listener
                 if (event.getPlayer() == null || !event.getPlayer().isOnline() || v == null)
                     return;
                 v.addPassenger(event.getPlayer());
-            },5L);
+            }, 5L);
         }
     }
 
     @EventHandler
-    public void InitializePlayerDataOnJoin(PlayerJoinEvent event)
-    {
-        if(PlayerData.GetPlayerData(event.getPlayer()) == null)
-        {
+    public void InitializePlayerDataOnJoin(PlayerJoinEvent event) {
+        if (PlayerData.GetPlayerData(event.getPlayer()) == null) {
             PlayerData.LoadPlayerData(event.getPlayer());
         }
     }
 
     @EventHandler
-    public void InitializePlayerDataOnEnable(PluginEnableEvent event)
-    {
+    public void InitializePlayerDataOnEnable(PluginEnableEvent event) {
         if (event.getPlugin() != Main.plugin)
             return;
 
-        for(Player p : Bukkit.getOnlinePlayers())
-        {
+        for (Player p : Bukkit.getOnlinePlayers()) {
             PlayerData.LoadPlayerData(p);
         }
     }

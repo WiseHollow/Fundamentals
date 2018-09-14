@@ -5,6 +5,6 @@ package com.WiseHollow.Fundamentals.Tasks;
  */
 public interface CustomTask
 {
-    public boolean Run();
-    public void Disable();
+    boolean Run();
+    void Disable();
 }

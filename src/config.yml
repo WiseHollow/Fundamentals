@@ -52,10 +52,10 @@ Kits:
     StarterKit:
         delay: 25
         items:
-            - STONE_PICKAXE 1 0 Starter_Pickaxe &eThis_item&f_is_received%nfrom_your_starter_kit.
-            - STONE_SPADE 1 0 Start_Spade &eThis_item&f_is_received%nfrom_your_starter_kit.
-            - STONE_AXE 1 0 Starter_Axe &eThis_item&f_is_received%nfrom_your_starter_kit.
-            - STONE_SWORD 1 0 Starter_Sword &eThis_item&f_is_received%nfrom_your_starter_kit. sharpness%1
+            - STONE_PICKAXE 1 Starter_Pickaxe &eThis_item&f_is_received%nfrom_your_starter_kit.
+            - STONE_SPADE 1 Start_Spade &eThis_item&f_is_received%nfrom_your_starter_kit.
+            - STONE_AXE 1 Starter_Axe &eThis_item&f_is_received%nfrom_your_starter_kit.
+            - STONE_SWORD 1 Starter_Sword &eThis_item&f_is_received%nfrom_your_starter_kit. sharpness%1
 
 ############################################################
 # +------------------------------------------------------+ #

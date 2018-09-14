@@ -12,14 +12,15 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by John on 10/13/2016.
  */
-public class Settings
-{
+public class Settings {
+
     private static FileConfiguration config = Main.plugin.getConfig();
     public static int TeleportDelay = 0; // In seconds
     public static Location Spawn = Bukkit.getServer().getWorlds().get(0).getSpawnLocation();
@@ -40,13 +41,12 @@ public class Settings
     public static boolean PreventLavaDamage = false;
 
     private static HashMap<String, Integer> SetHomeCountPermissions = new HashMap<>();
-    public static boolean HasPermissionForHomeAmount(Player player, int request)
-    {
+
+    public static boolean HasPermissionForHomeAmount(Player player, int request) {
         if (player.hasPermission("Fundamentals.Homes.*") || request <= DefaultSetHomeAmount)
             return true;
 
-        for(String key : SetHomeCountPermissions.keySet())
-        {
+        for (String key : SetHomeCountPermissions.keySet()) {
             if (player.hasPermission("Fundamentals.Homes." + key) && SetHomeCountPermissions.get(key) >= request)
                 return true;
         }
@@ -57,8 +57,7 @@ public class Settings
     public static HashMap<String, Location> warps = new HashMap<>();
 
 
-    public static void Load()
-    {
+    public static void Load() {
         TeleportDelay = config.getInt("Teleport_Delay");
         AFKDelay = config.getInt("Afk_Delay");
         SignColor = config.getBoolean("Sign_Colors");
@@ -73,30 +72,25 @@ public class Settings
         PreventFireDamage = config.getBoolean("Prevent_Fire_Damage");
         PreventLavaDamage = config.getBoolean("Prevent_Lava_Damage");
 
-        for (String s : config.getStringList("Home_Permissions"))
-        {
+        for (String s : config.getStringList("Home_Permissions")) {
             String[] keys = s.split(" ");
             SetHomeCountPermissions.put(keys[0], Integer.parseInt(keys[1]));
         }
 
-        if (config.getConfigurationSection("Spawn_Location") != null)
-        {
+        if (config.getConfigurationSection("Spawn_Location") != null) {
             World world = Bukkit.getWorld(config.getString("Spawn_Location.World"));
             if (world != null)
                 Spawn = new Location(world, config.getInt("Spawn_Location.X"), config.getInt("Spawn_Location.Y"), config.getInt("Spawn_Location.Z"), (float) config.getDouble("Spawn_Location.Yaw"), (float) config.getDouble("Spawn_Location.Pitch"));
         }
 
-        if (config.getConfigurationSection("Spawn_Location_First_Join") != null)
-        {
+        if (config.getConfigurationSection("Spawn_Location_First_Join") != null) {
             World world = Bukkit.getWorld(config.getString("Spawn_Location_First_Join.World"));
             if (world != null)
                 SpawnFirstJoin = new Location(world, config.getInt("Spawn_Location_First_Join.X"), config.getInt("Spawn_Location_First_Join.Y"), config.getInt("Spawn_Location_First_Join.Z"), (float) config.getDouble("Spawn_Location_First_Join.Yaw"), (float) config.getDouble("Spawn_Location_First_Join.Pitch"));
         }
 
-        if (config.getConfigurationSection("Jails") != null)
-        {
-            for (String key : config.getConfigurationSection("Jails").getKeys(false))
-            {
+        if (config.getConfigurationSection("Jails") != null) {
+            for (String key : config.getConfigurationSection("Jails").getKeys(false)) {
                 World world = Bukkit.getWorld(config.getString("Jails." + key + ".Location.World"));
                 int x = config.getInt("Jails." + key + ".Location.X");
                 int y = config.getInt("Jails." + key + ".Location.Y");
@@ -106,11 +100,9 @@ public class Settings
             }
         }
 
-        if (config.getConfigurationSection("Kits") != null)
-        {
+        if (config.getConfigurationSection("Kits") != null) {
             ConfigurationSection kits = config.getConfigurationSection("Kits");
-            for(String key : kits.getKeys(false))
-            {
+            for (String key : kits.getKeys(false)) {
                 String name = key;
                 int delay = kits.getInt(key + ".delay");
                 List<String> itemStrings = kits.getStringList(key + ".items");
@@ -120,10 +112,8 @@ public class Settings
 
                 Kit kit = new Kit(name, delay);
 
-                if (itemStrings != null && !itemStrings.isEmpty())
-                {
-                    for(String s : itemStrings)
-                    {
+                if (itemStrings != null && !itemStrings.isEmpty()) {
+                    for (String s : itemStrings) {
                         String[] args = s.split(" ");
                         Material mat;
                         int amount;
@@ -134,61 +124,43 @@ public class Settings
 
                         HashMap<Enchantment, Integer> enchantments = new HashMap<>();
 
-                        try
-                        {
+                        try {
                             mat = Material.getMaterial(args[0].toUpperCase());
                             amount = Integer.valueOf(args[1]);
-                            if (args.length > 2)
-                                data = Byte.valueOf(args[2]);
-                            else
-                                data = (byte) 0;
 
-                            if (args.length > 3)
-                            {
-                                displayName = args[3];
+                            if (args.length > 2) {
+                                displayName = args[2];
                             }
-                            if (args.length > 4)
-                            {
-                                lore = args[4];
+                            if (args.length > 3) {
+                                lore = args[3];
                             }
 
-                            if (args.length > 5)
-                            {
-                                for(int i = 5; i < args.length; i++)
-                                {
+                            if (args.length > 4) {
+                                for (int i = 4; i < args.length; i++) {
                                     String[] eElement = args[i].split("%");
                                     Enchantment enchantment = Enchantment.getByKey(NamespacedKey.minecraft(eElement[0].toLowerCase()));
                                     int level = Integer.valueOf(eElement[1]);
                                     enchantments.put(enchantment, level);
                                 }
                             }
-                        }
-                        catch(Exception ex)
-                        {
+                        } catch (Exception ex) {
                             Main.logger.severe(ex.getMessage());
                             continue;
                         }
 
-                        ItemStack item = new ItemStack(mat, amount, data);
+                        ItemStack item = new ItemStack(mat, amount);
                         ItemMeta meta = item.getItemMeta();
                         if (displayName != null && !displayName.equalsIgnoreCase("-"))
                             meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', displayName.replaceAll("_", " ")));
-                        if (lore != null && !lore.equalsIgnoreCase("-"))
-                        {
-                            List<String> loreList = new ArrayList<>();
-                            for(String l : ChatColor.translateAlternateColorCodes('&', lore.replaceAll("_", " ")).split("%n"))
-                            {
-                                loreList.add(l);
-                            }
+                        if (lore != null && !lore.equalsIgnoreCase("-")) {
+                            List<String> loreList = new ArrayList<>(Arrays.asList(ChatColor.translateAlternateColorCodes('&', lore.replaceAll("_", " ")).split("%n")));
                             meta.setLore(loreList);
                         }
 
                         item.setItemMeta(meta);
 
-                        if (!enchantments.isEmpty())
-                        {
-                            for(Enchantment enchantment : enchantments.keySet())
-                            {
+                        if (!enchantments.isEmpty()) {
+                            for (Enchantment enchantment : enchantments.keySet()) {
                                 if (!AllowUnsafeEnchantments)
                                     item.addEnchantment(enchantment, enchantments.get(enchantment));
                                 else
@@ -205,14 +177,11 @@ public class Settings
         }
 
         File warpFile = new File("plugins" + File.separator + "FundamentalsX" + File.separator + "warps.yml");
-        if (warpFile.exists())
-        {
+        if (warpFile.exists()) {
             YamlConfiguration warpConfig = YamlConfiguration.loadConfiguration(warpFile);
-            if (warpConfig.getConfigurationSection("Warps") != null)
-            {
+            if (warpConfig.getConfigurationSection("Warps") != null) {
                 ConfigurationSection section = warpConfig.getConfigurationSection("Warps");
-                for(String key : section.getKeys(false))
-                {
+                for (String key : section.getKeys(false)) {
                     int x;
                     int y;
                     int z;
@@ -232,8 +201,8 @@ public class Settings
             }
         }
     }
-    public static void Save()
-    {
+
+    public static void Save() {
         //
         // General configuration
         //
@@ -252,8 +221,7 @@ public class Settings
         //
 
         config.set("Jails", null);
-        for(String key : jails.keySet())
-        {
+        for (String key : jails.keySet()) {
             Location loc = jails.get(key);
             config.set("Jails." + key + ".Location.World", loc.getWorld().getName());
             config.set("Jails." + key + ".Location.X", loc.getBlockX());
@@ -266,20 +234,15 @@ public class Settings
         //
 
         File warpFile = new File("plugins" + File.separator + "FundamentalsX" + File.separator + "warps.yml");
-        if (!warpFile.exists())
-        {
-            try
-            {
+        if (!warpFile.exists()) {
+            try {
                 warpFile.createNewFile();
-            }
-            catch(IOException ex)
-            {
+            } catch (IOException ex) {
                 Main.logger.severe(ex.getMessage());
             }
         }
         YamlConfiguration warpConfig = YamlConfiguration.loadConfiguration(warpFile);
-        for(String key : warps.keySet())
-        {
+        for (String key : warps.keySet()) {
             Location loc = warps.get(key);
             warpConfig.set("Warps." + key + ".Location.World", loc.getWorld().getName());
             warpConfig.set("Warps." + key + ".Location.X", loc.getBlockX());
@@ -293,12 +256,9 @@ public class Settings
         // Save to file
         //
 
-        try
-        {
+        try {
             warpConfig.save(warpFile);
-        }
-        catch(Exception ex)
-        {
+        } catch (Exception ex) {
             Main.logger.severe(ex.getMessage());
         }
 
