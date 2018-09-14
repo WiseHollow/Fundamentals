@@ -9,8 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -22,6 +21,7 @@ import java.util.List;
 public class Settings {
 
     private static FileConfiguration config = Main.plugin.getConfig();
+    public static String motd = "";
     public static int TeleportDelay = 0; // In seconds
     public static Location Spawn = Bukkit.getServer().getWorlds().get(0).getSpawnLocation();
     public static Location SpawnFirstJoin = null;
@@ -56,8 +56,26 @@ public class Settings {
 
     public static HashMap<String, Location> warps = new HashMap<>();
 
+    public static void loadMotd() {
+        File file = new File("plugins" + File.separator + Main.plugin.getName() + File.separator + "motd.txt");
+        if (file.exists()) {
+            motd = "";
+            BufferedReader bufferedReader;
+            try {
+                bufferedReader = new BufferedReader(new FileReader(file));
 
-    public static void Load() {
+                String line;
+                while((line = bufferedReader.readLine()) != null) {
+                    motd += line + "\n";
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
+        }
+    }
+
+    public static void load() {
         TeleportDelay = config.getInt("Teleport_Delay");
         AFKDelay = config.getInt("Afk_Delay");
         SignColor = config.getBoolean("Sign_Colors");

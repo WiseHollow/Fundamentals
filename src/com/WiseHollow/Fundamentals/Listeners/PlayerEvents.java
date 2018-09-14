@@ -1,13 +1,11 @@
 package com.WiseHollow.Fundamentals.Listeners;
 
-import com.WiseHollow.Fundamentals.DataCollection.PlayerData;
 import com.WiseHollow.Fundamentals.Kit;
 import com.WiseHollow.Fundamentals.Language;
 import com.WiseHollow.Fundamentals.Main;
 import com.WiseHollow.Fundamentals.Settings;
 import com.WiseHollow.Fundamentals.Tasks.AFKDetectTask;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -19,9 +17,6 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.event.server.PluginEnableEvent;
-
-import java.util.stream.Collectors;
 
 import static com.WiseHollow.Fundamentals.Tasks.TeleportTask.PreviousLocation;
 
@@ -92,25 +87,6 @@ public class PlayerEvents implements Listener {
     }
 
     @EventHandler
-    public void LoginMessage(PlayerJoinEvent event) {
-        Integer online = Bukkit.getOnlinePlayers().stream()
-                .filter(player -> (!player.hasMetadata("vanished") || player.getMetadata("vanished").equals(false)))
-                .collect(Collectors.toList()).size();
-
-        event.setJoinMessage(Settings.JoinMessage.replace("%p", event.getPlayer().getName()));
-        event.getPlayer().sendMessage(ChatColor.GOLD + "Welcome, " + event.getPlayer().getName());
-        event.getPlayer().sendMessage(ChatColor.GOLD + "Type " + ChatColor.RED + "/help" + ChatColor.GOLD + " for a list of commands.");
-        if (event.getPlayer().hasPermission("Fundamentals.Who"))
-            event.getPlayer().sendMessage(ChatColor.GOLD + "Type " + ChatColor.RED + "/list" + ChatColor.GOLD + " to see who is online.");
-        event.getPlayer().sendMessage(ChatColor.GOLD + "Players online: " + ChatColor.RED + online);
-    }
-
-    @EventHandler
-    public void QuitMessage(PlayerQuitEvent event) {
-        event.setQuitMessage(Settings.QuitMessage.replace("%p", event.getPlayer().getName()));
-    }
-
-    @EventHandler
     public void OnQuit(PlayerQuitEvent event) {
         AFKDetectTask task = AFKDetectTask.GetTask(event.getPlayer());
         if (task == null)
@@ -151,23 +127,6 @@ public class PlayerEvents implements Listener {
                     return;
                 v.addPassenger(event.getPlayer());
             }, 5L);
-        }
-    }
-
-    @EventHandler
-    public void InitializePlayerDataOnJoin(PlayerJoinEvent event) {
-        if (PlayerData.GetPlayerData(event.getPlayer()) == null) {
-            PlayerData.LoadPlayerData(event.getPlayer());
-        }
-    }
-
-    @EventHandler
-    public void InitializePlayerDataOnEnable(PluginEnableEvent event) {
-        if (event.getPlugin() != Main.plugin)
-            return;
-
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            PlayerData.LoadPlayerData(p);
         }
     }
 }

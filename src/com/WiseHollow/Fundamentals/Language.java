@@ -20,4 +20,5 @@ public class Language
     public static final String MoneySetTo = PREFIX + "Your cash balance was set to %1";
     public static final String HasTeleportDisabled = PREFIX + "That player has their teleport disabled.";
     public static final String TeleportHasBeenToggled = PREFIX + "Teleporting to you has been toggled ";
+    public static final String ConfigurationsReloaded = PREFIX + "Configuration files have been reloaded.";
 }

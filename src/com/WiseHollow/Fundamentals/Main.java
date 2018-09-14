@@ -2,9 +2,7 @@ package com.WiseHollow.Fundamentals;
 
 import com.WiseHollow.Fundamentals.Commands.*;
 import com.WiseHollow.Fundamentals.DataCollection.MetricsLite;
-import com.WiseHollow.Fundamentals.Listeners.DamageEvents;
-import com.WiseHollow.Fundamentals.Listeners.PlayerEvents;
-import com.WiseHollow.Fundamentals.Listeners.SignColorEvents;
+import com.WiseHollow.Fundamentals.Listeners.*;
 import com.WiseHollow.Fundamentals.Tasks.JailTask;
 import com.WiseHollow.Fundamentals.Tasks.LagTask;
 import net.milkbowl.vault.chat.Chat;
@@ -34,12 +32,15 @@ public class Main extends JavaPlugin {
 
         saveDefaultConfig();
 
-        Settings.Load();
+        Settings.load();
+        Settings.loadMotd();
 
         setupMetrics();
 
         registerCommands();
         getServer().getPluginManager().registerEvents(new PlayerEvents(), this);
+        getServer().getPluginManager().registerEvents(new PlayerDataEvents(), this);
+        getServer().getPluginManager().registerEvents(new PlayerMessageEvents(), this);
         getServer().getPluginManager().registerEvents(new SignColorEvents(), this);
         getServer().getPluginManager().registerEvents(new DamageEvents(), this);
 
@@ -59,6 +60,7 @@ public class Main extends JavaPlugin {
     @Override
     public void saveDefaultConfig() {
         loadConfigFromJar();
+        loadMotdFromJar();
     }
 
     private void registerCommands() {
@@ -131,7 +133,7 @@ public class Main extends JavaPlugin {
         this.getCommand("DelHome").setExecutor(new CommandDelHome());
         this.getCommand("Workbench").setExecutor(new CommandWorkbench());
         this.getCommand("Sudo").setExecutor(new CommandSudo());
-        this.getCommand("FundamentalsX").setExecutor(new CommandFundamentalsX());
+        this.getCommand("Fundamentals").setExecutor(new CommandFundamentals());
     }
 
     public boolean setupMetrics() {
@@ -218,29 +220,44 @@ public class Main extends JavaPlugin {
             dir.mkdirs();
 
         if (!configFile.exists()) {
-            InputStream fis = plugin.getResource("config.yml");
-            FileOutputStream fos = null;
+            exportInternalFile("config.yml", configFile);
+        }
+    }
+
+    private void loadMotdFromJar() {
+        File file = new File("plugins" + File.separator + "FundamentalsX" + File.separator + "motd.txt");
+        File dir = new File("plugins" + File.separator + "FundamentalsX");
+        if (!dir.isDirectory())
+            dir.mkdirs();
+
+        if (!file.exists()) {
+            exportInternalFile("motd.txt", file);
+        }
+    }
+
+    private void exportInternalFile(String resource, File output) {
+        InputStream fis = plugin.getResource(resource);
+        FileOutputStream fos = null;
+        try {
+            output.createNewFile();
+            fos = new FileOutputStream(output);
+            byte[] buf = new byte[1024];
+            int i;
+            while ((i = fis.read(buf)) != -1) {
+                fos.write(buf, 0, i);
+            }
+        } catch (Exception e) {
+            logger.severe("Failed to load config from JAR");
+        } finally {
             try {
-                configFile.createNewFile();
-                fos = new FileOutputStream(configFile);
-                byte[] buf = new byte[1024];
-                int i;
-                while ((i = fis.read(buf)) != -1) {
-                    fos.write(buf, 0, i);
+                if (fis != null) {
+                    fis.close();
+                }
+                if (fos != null) {
+                    fos.close();
                 }
             } catch (Exception e) {
-                logger.severe("Failed to load config from JAR");
-            } finally {
-                try {
-                    if (fis != null) {
-                        fis.close();
-                    }
-                    if (fos != null) {
-                        fos.close();
-                    }
-                } catch (Exception e) {
-                    logger.severe(e.getMessage());
-                }
+                logger.severe(e.getMessage());
             }
         }
     }
