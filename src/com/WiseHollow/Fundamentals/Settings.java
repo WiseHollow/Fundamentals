@@ -36,6 +36,7 @@ public class Settings {
     public static String ShutdownMessage = "Server will restart in %m minutes";
     public static Boolean AllowMetrics = true;
     public static int DefaultSetHomeAmount = 1;
+    public static int SpawnMobLimit = 10;
 
     public static boolean PreventFireDamage = false;
     public static boolean PreventLavaDamage = false;
@@ -89,6 +90,7 @@ public class Settings {
         EnableSpawnFirstJoin = config.getBoolean("First_Join");
         PreventFireDamage = config.getBoolean("Prevent_Fire_Damage");
         PreventLavaDamage = config.getBoolean("Prevent_Lava_Damage");
+        SpawnMobLimit = config.getInt("Spawn_Mob_Limit");
 
         for (String s : config.getStringList("Home_Permissions")) {
             String[] keys = s.split(" ");

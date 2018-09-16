@@ -65,7 +65,7 @@ public class GodTask implements CustomTask, Listener
     @EventHandler
     public void TargetCheck(EntityTargetLivingEntityEvent event)
     {
-        if (event.isCancelled() || !event.getTarget().equals(player))
+        if (event.isCancelled() || event.getTarget() == null || !event.getTarget().equals(player))
             return;
 
         event.setCancelled(true);

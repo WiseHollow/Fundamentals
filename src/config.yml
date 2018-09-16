@@ -22,6 +22,8 @@ Allow_Unsafe_Enchantments: false
 Starter_Kit: 'None'
 # When using '/stop 10' to stop the server in 10 minutes, what should we broadcast on the server.
 Scheduled_Shutdown_Message: 'Server will restart in %m minutes'
+# Spawn Limiter for /spawnmob command
+Spawn_Mob_Limit: 10
 # Allow EssentialsX to report back data about your server.
 Allow_Metrics: true
 

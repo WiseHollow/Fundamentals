@@ -2,6 +2,7 @@ package com.WiseHollow.Fundamentals.Commands;
 
 import com.WiseHollow.Fundamentals.Language;
 import com.WiseHollow.Fundamentals.Permissions.PermissionCheck;
+import com.WiseHollow.Fundamentals.Settings;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -61,7 +62,7 @@ public class CommandSpawnEntity implements CommandExecutor
 
         Set<Material> s = null;
         Location target = player.getTargetBlock(s, 100).getLocation().clone().add(0.5, 1, 0.5);
-        for (int i = 0; i < amount; i++) {
+        for (int i = 0; i < (amount > Settings.SpawnMobLimit ? Settings.SpawnMobLimit : amount); i++) {
             LivingEntity spawnedEntity = (LivingEntity) target.getWorld().spawnEntity(target, type);
             if (tamed && spawnedEntity instanceof Tameable) {
                 Tameable tameable = (Tameable) spawnedEntity;
