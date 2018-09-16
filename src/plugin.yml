@@ -90,7 +90,7 @@ commands:
                usage: /<command> <Entity>
       Butcher:
                description: Kill all hostile creatures in your world.
-               usage: /<command>
+               usage: /<command> [all/type]
       TPS:
                description: Calculate the current TPS of your server.
                usage: /<command>
