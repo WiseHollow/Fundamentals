@@ -1,50 +1,50 @@
 package com.WiseHollow.Fundamentals.Commands;
 
 import com.WiseHollow.Fundamentals.Language;
-import com.WiseHollow.Fundamentals.Permissions.PermissionCheck;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Animals;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Monster;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by John on 10/13/2016.
  */
-public class CommandButcher implements CommandExecutor
-{
+public class CommandButcher implements CommandExecutor {
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String cmd, String[] args)
-    {
-        if (!(sender instanceof Player))
-        {
+    public boolean onCommand(CommandSender sender, Command command, String cmd, String[] args) {
+        if (!(sender instanceof Player)) {
             sender.sendMessage(Language.YouMustBeLoggedIn);
             return true;
         }
 
         Player player = (Player) sender;
-        if (!sender.hasPermission("Fundamentals.Butcher"))
-        {
+        if (!sender.hasPermission("Fundamentals.Butcher")) {
             player.sendMessage(Language.DoesNotHavePermission);
             return true;
         }
 
         boolean all = false;
-        if (args.length > 0 && args[0].equalsIgnoreCase("ALL"))
-            all = true;
-
-        int kill = 0;
-        for(LivingEntity e : player.getWorld().getLivingEntities())
-        {
-            if (e instanceof Monster || (all && e instanceof Animals))
-            {
-                e.remove();
-                kill++;
+        EntityType entityType = null;
+        if (args.length > 0) {
+            if (args[0].equalsIgnoreCase("ALL")) {
+                all = true;
+            } else {
+                entityType = EntityType.valueOf(args[0].toUpperCase());
             }
         }
-        player.sendMessage(Language.PREFIX + "Killed " + kill + " entities.");
+
+        AtomicInteger kill = new AtomicInteger();
+        EntityType finalEntityType = entityType;
+        boolean finalAll = all;
+        player.getWorld().getLivingEntities().forEach(livingEntity -> {
+            if (livingEntity instanceof Monster || finalAll || (finalEntityType != null && livingEntity.getType() == finalEntityType)) {
+                livingEntity.remove();
+                kill.getAndIncrement();
+            }
+        });
+        player.sendMessage(Language.PREFIX + "Killed " + kill.get() + " entities.");
 
         return true;
     }
