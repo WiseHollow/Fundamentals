@@ -91,7 +91,6 @@ public class Main extends JavaPlugin {
         this.getCommand("Who").setExecutor(cw);
         this.getCommand("List").setExecutor(cw);
         this.getCommand("AFK").setExecutor(new CommandAFK());
-        this.getCommand("Hat").setExecutor(new CommandHat());
         CommandSpawnEntity se = new CommandSpawnEntity();
         this.getCommand("SpawnEntity").setExecutor(se);
         this.getCommand("SpawnMob").setExecutor(se);

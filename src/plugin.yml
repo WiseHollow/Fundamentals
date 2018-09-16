@@ -82,9 +82,6 @@ commands:
       AFK:
                description: Tell everyone you are away from keyboard.
                usage: /<command>
-      Hat:
-               description: Set the item in your hand as your hat.
-               usage: /<command>
       SpawnEntity:
                description: Spawn a living entity at your target location.
                usage: /<command> <Entity>
@@ -487,9 +484,6 @@ permissions:
                default: op
       Fundamentals.Workbench:
                description: Pull up a virtual workbench.
-               default: op
-      Fundamentals.Hat:
-               description: Set the item in your hand as your hat.
                default: op
       Fundamentals.Sudo:
                description: Force another player to run a command.

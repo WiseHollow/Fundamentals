@@ -55,23 +55,7 @@ public class CommandI implements CommandExecutor
             }
         }
 
-        if (materialData.length == 1)
-            player.getInventory().addItem(new ItemStack(given, amount));
-        else
-        {
-            byte data;
-            try
-            {
-                data = Byte.valueOf(materialData[1]);
-            }
-            catch(Exception ex)
-            {
-                sender.sendMessage(ex.getMessage());
-                return true;
-            }
-
-            player.getInventory().addItem(new ItemStack(given, amount, data));
-        }
+        player.getInventory().addItem(new ItemStack(given, amount));
         player.sendMessage(Language.PREFIX_COLOR + "You were given x" + amount + " of " + given.name());
 
         return true;
